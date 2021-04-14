@@ -1,0 +1,88 @@
+/* ---------------------------
+*
+* Menbu.css
+*
+* ---------------------------*/
+.menu {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 150px;
+  transform: translate(-50%, calc(100% + 1.5rem));
+  padding: 1rem;
+  background: white;
+  border-radius: 2px;
+  box-sizing: border-box;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease;
+}
+
+.menu.overflow-right {
+  left: -1rem;
+}
+
+.menu.visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translate(-50%, calc(100% + 1rem));
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+}
+
+.menu::after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%) rotateZ(45deg);
+  background: white;
+}
+
+.menu.overflow-right::after {
+  left: 77.5%;
+}
+
+.menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu ul li {
+  margin-bottom: 0.5rem;
+}
+
+.menu ul li:last-of-type {
+  margin-bottom: 0;
+}
+
+.menu ul li a {
+  font-size: 0.875rem; /* 14px */
+  font-weight: bold;
+  text-decoration: none;
+  color: #00C65E;
+  transition: all 0.15s ease;
+}
+
+.menu ul li a:hover {
+  color: #1f1f1f;
+}
+
+@media screen and (max-width: 1095px) {
+  .menu {
+    left: initial;
+    right: 0;
+    transform: none;
+  }
+
+  .menu.visible {
+    transform: translate(0, calc(100% + 1rem))
+  }
+
+  .menu::after {
+    left: initial;
+    right: 14px;
+  }
+}

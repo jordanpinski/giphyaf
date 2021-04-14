@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { useStoreActions } from 'easy-peasy';
+import { initMySky } from './skynet';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
+import {
+  Home,
+  Upload
+} from './pages';
 
-function App() {
+const App = () => {
+
+  const setMySky = useStoreActions((action: any) => action.setMySky);
+  const setLoggedIn = useStoreActions((action: any) => action.setLoggedIn);
+
+  useEffect(() => {
+    initMySky().then((mySky) => {
+      setMySky(mySky)
+      console.log(mySky);
+      //setLoggedIn(mySky)
+    });
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+    <Switch>
+
+      <Route exact path="/">
+        <Home />
+      </Route>
+
+      <Route exact path="/upload">
+        <Upload />
+      </Route>
+
+    </Switch>
+  </Router>
+  )
 }
 
 export default App;
