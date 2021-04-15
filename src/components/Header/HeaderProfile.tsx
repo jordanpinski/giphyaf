@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Menu from '../Menu';
+import Avatar from '../Avatar';
 import { userRegular } from '../../assets/icons';
 
 interface Props {
@@ -27,7 +28,7 @@ const HeaderProfile: React.FC<Props> = () => {
   return (
     <div className="profile" onClick={onClick}>
       <a href="/" title="Profile">
-        <object type="image/svg+xml" data={userRegular} width="20" height="18">User Icon</object>
+        <Avatar text="Profile" width={50} height={50} />
       </a>
       <Menu visible={menuVisible}>
         <ul>

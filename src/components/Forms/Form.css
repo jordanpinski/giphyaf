@@ -1,0 +1,119 @@
+/* ---------------------------
+*
+* Form.css
+*
+* ---------------------------*/
+form {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+form hr {
+  margin: 2rem 0;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+form .input-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+form .input-wrapper:last-of-type {
+  margin-bottom: 0;
+}
+
+form .input-wrapper label {
+  min-width: 50px;
+  margin-right: 1rem;
+}
+
+form .input-wrapper input[type="text"] {
+  padding: 12px 14px;
+  outline: none;
+}
+
+
+form .input-wrapper input[type="file"] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+input[type="file"] + label {
+  position: relative;
+  width: 208px;
+  height: 208px;
+  min-width: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+input[type="file"]:hover + label {
+  background: transparent;
+}
+
+input[type="file"] + label .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700;
+  line-height: 1;
+  color: #00C65E;
+  background: white;
+  border-radius: 2px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+input[type="file"] + label.gif-selected .content {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+input[type="file"] + label.gif-selected:hover .content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+input[type="file"] + label img {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+input[type="file"] + label object {
+  margin-bottom: 1rem;
+  pointer-events: none;
+}
+
+input[type="file"] + label .types {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 0.7rem;
+  font-weight: normal;
+  text-align: center;
+  color: #3e4149;
+}

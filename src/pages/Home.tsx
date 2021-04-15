@@ -11,7 +11,7 @@ const Home: React.FC<Props> = () => {
   return (
     <>
       <Header />
-      <div className="page page--home">
+      <div className="page page--home fade-up">
         <div className="container">
           <div className="row">
             <div className="column column-3">

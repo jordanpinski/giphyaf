@@ -1,15 +1,18 @@
+* {
+  font-family: 'Spartan', sans-serif;
+}
+
 html {
   background: #282c34;
   font-size: 16px;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Spartan', sans-serif;
-  overflow-x: hidden;
 }
 
 @media screen and (max-width: 991px) {
@@ -91,4 +94,39 @@ body {
 * ---------------------------------*/
 .page {
   margin-top: 100px;
+  color: white;
+}
+
+.page h1 {
+  font-weight: 900;
+}
+
+.page p a {
+  font-weight: bold;
+  color: #C5FF00;
+  transition: all 0.15s ease;
+}
+
+.page p a:hover {
+  color: rgba(197, 255, 0, 0.9);
+}
+
+/* ---------------------------------
+*
+* ANIMATIONS
+*
+* ---------------------------------*/
+.fade-up {
+  animation: 750ms forwards fadeUp;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

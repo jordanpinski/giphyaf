@@ -17,11 +17,15 @@ const App = () => {
   const setLoggedIn = useStoreActions((action: any) => action.setLoggedIn);
 
   useEffect(() => {
-    initMySky().then((mySky) => {
-      setMySky(mySky)
-      console.log(mySky);
-      //setLoggedIn(mySky)
-    });
+    initMySky().then((data) => {
+      const { mySky, loggedIn } = data;
+
+      setMySky(mySky);
+      setLoggedIn(loggedIn);
+      
+    }).catch((error) => {
+      console.log(error)
+    })
   });
 
   return (

@@ -1,0 +1,28 @@
+/* ---------------------------
+*
+* Avatar.css
+*
+* ---------------------------*/
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #00C65E;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.avatar:hover {
+  background: rgba(0, 198, 94, 0.9);
+}
+
+.avatar object {
+  width: 32%;
+  min-width: 12px;
+}
+
+.avatar img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}

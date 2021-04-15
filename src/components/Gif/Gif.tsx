@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Avatar from '../Avatar';
 import './Gif.css';
 
 interface Props {
@@ -8,9 +9,21 @@ interface Props {
 const Gif: React.FC<Props> = () => {
   return (
     <div className="gif">
-      <div className="image"></div>
+      <a href="/" title="">
+        <div className="image">
+
+        </div>
+      </a>
       <div className="meta">
-        <p>Title here</p>
+        <Avatar text="User" width={34} height={34} />
+        <div className="right">
+          <p className="title">Title here</p>
+          <ul className="tags">
+            <li>#tag1</li>
+            <li>#tag2</li>
+          </ul>
+        </div>
+        
       </div>
     </div>
   )

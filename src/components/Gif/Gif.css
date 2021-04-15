@@ -1,16 +1,47 @@
 /* ---------------------------
 *
-* Gfi.css
+* Gif.css
 *
 * ---------------------------*/
-.gif {
-  
-}
-
 .gif .image {
   content: '';
   width: 100%;
   height: 240px;
   background: #5B5B5B;
   border-radius: 2px;
+  transition: all 0.15s ease;
+}
+
+.gif .image:hover {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
+
+.gif .meta {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 1rem 0 0;
+}
+
+.gif .meta .right {
+  margin: 0 0 0 1rem;
+}
+
+.gif .meta .right .title {
+  margin: 0;
+  color: white;
+  font-weight: bold;
+}
+
+.gif .meta .right .tags {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gif .meta .right .tags li {
+  margin-right: 0.45rem;
+  font-size: 0.875rem; /* 14px */
+  color: rgba(255, 255, 255, 0.7);
 }

@@ -74,7 +74,7 @@
   .menu {
     left: initial;
     right: 0;
-    transform: none;
+    transform: translate(0, calc(100% + 1.5rem));
   }
 
   .menu.visible {
