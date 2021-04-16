@@ -1329,6 +1329,14 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@skynetlabs/content-record-library@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@skynetlabs/content-record-library/-/content-record-library-0.4.0.tgz#a9f7443149d35901c9c256cae1d72c3664213707"
+  dependencies:
+    post-me "^0.4.5"
+    skynet-js "^4.0.1-beta"
+    skynet-mysky-utils "^0.1.0"
+
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-1.4.2.tgz#e6786b6af5799f82f7ab3a82e53f6182d2b91a58"
@@ -1623,6 +1631,12 @@
   resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-5.1.13.tgz#051c0d229bd48ad90558a1db500708127cc512f7"
   dependencies:
     "@types/history" "*"
+    "@types/react" "*"
+
+"@types/react-tagsinput@^3.19.7":
+  version "3.19.7"
+  resolved "https://registry.yarnpkg.com/@types/react-tagsinput/-/react-tagsinput-3.19.7.tgz#f0ebba4416e720c08ed11df75e03a97b89fe8288"
+  dependencies:
     "@types/react" "*"
 
 "@types/react@*", "@types/react@>=16.14.0", "@types/react@>=16.9.11", "@types/react@^17.0.3":
@@ -8143,6 +8157,10 @@ react-scripts@4.0.3:
   optionalDependencies:
     fsevents "^2.1.3"
 
+react-tagsinput@^3.19.0:
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/react-tagsinput/-/react-tagsinput-3.19.0.tgz#6e3b45595f2d295d4657bf194491988f948caabf"
+
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
@@ -8826,7 +8844,27 @@ skynet-js@^4.0.0-beta:
     url-join "^4.0.1"
     url-parse "1.4.7"
 
-skynet-mysky-utils@^0.1.2:
+skynet-js@^4.0.1-beta:
+  version "4.0.1-beta"
+  resolved "https://registry.yarnpkg.com/skynet-js/-/skynet-js-4.0.1-beta.tgz#cafe16c4534c6da260cc7205cdda103d367c5cb0"
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    axios "^0.21.0"
+    base32-encode "^1.1.1"
+    base64-js "^1.3.1"
+    blakejs "^1.1.0"
+    buffer "^6.0.1"
+    mime "^2.5.2"
+    path-browserify "^1.0.1"
+    post-me "^0.4.5"
+    randombytes "^2.1.0"
+    sjcl "^1.0.8"
+    skynet-mysky-utils "^0.1.2"
+    tweetnacl "^1.0.3"
+    url-join "^4.0.1"
+    url-parse "1.4.7"
+
+skynet-mysky-utils@^0.1.0, skynet-mysky-utils@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/skynet-mysky-utils/-/skynet-mysky-utils-0.1.2.tgz#1ca5e9cf69a71ac67dd805c90371fd71f622adc1"
   dependencies:

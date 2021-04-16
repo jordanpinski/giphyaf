@@ -1,63 +1,60 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { useStoreState } from 'easy-peasy';
 import * as yup from 'yup';
 import Form from 'react-formal';
 import { Button } from '../Button';
-import { uploadRegular } from '../../assets/icons';
+import FilePicker from './FilePicker';
+import TagInput from './TagInput';
+import { loader } from '../../assets/icons';
 import './Form.css';
-
-interface Props {
-
-}
+import { mySkyDomain } from 'skynet-js';
 
 const formSchema  = yup.object({
   title: yup.string().required('Title is required')
 });
 
-const FormUpload: React.FC<Props> = ({}) => {
+const FormUpload: React.FC = () => {
 
+  // Local state
   const [tags, setTags] = useState<string[]>([]);
-  const [gifSelected, setGifSelected] = useState<boolean>();
-  const gifRef = useRef(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  /**
-   * Formats the tags.
-   * @param event 
-   */
-  // const handleTags = (event: any) => {
-  //   const value = event.target.value;
-  //   const tempTags: string[] = value.split(' ');
+  // Store state
+  const mySky = useStoreState((state: any) => state.mySky);
+  const skynetClient = useStoreState((state: any) => state.skynetClient);
+  const userID = useStoreState((state: any) => state.userID);
 
-  //   tempTags.forEach((tag: string, index: number) => {
+  const handleSubmit = async (values: any) => {
+    setLoading(true);
+    const { gifUpload: file, title } = values;
 
-  //     // Empty string
-  //     if (tag === '') {
-  //       tempTags.pop();
-  //       setTags([...tags, `#${tempTags[index - 1]}`]);
-  //       return;
-  //     }
+    // Upload the file.
+    const { skylink } = await skynetClient.uploadFile(file);
 
-  //   });
+    // Get the file's URL.
+    const skylinkUrl = await skynetClient.getSkylinkUrl(skylink);
 
-  // }
-
-  const handleGifChange = (event: any) => {
-    const file = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = (event) => {
-      // @ts-ignore
-      const src = event?.target.result;
-      console.log(src);
-      console.log(gifRef);
-      // @ts-ignore
-      gifRef.current.src = src;
-      setGifSelected(true);
+    const json = {
+      title,
+      skylink,
+      skylinkUrl,
+      tags,
+      date: Date.now()
     }
-  }
+    
+    // Write JSON data to MySky
+    try {
+      console.log(mySky);
+      console.log('userID', userID);
+      console.log('filepath', mySky.hostDomain)
+      const { data, skylink } = await mySky.setJSON(`localhost/`, json);
+      console.log({data, skylink});
+    } catch (error) {
+      console.error('Error uploading JSON', error)
+    }
 
-  const handleSubmit = (values: any) => {
-    console.log(values);
-  } 
+    setLoading(false);
+  }
 
   return (
     <>
@@ -70,40 +67,30 @@ const FormUpload: React.FC<Props> = ({}) => {
       >
 
         <div className="input-wrapper">
-          <label>GIF</label>
-          <Form.Field
-            type="file"
-            name="gifUpload"
-            id="gifUpload"
-            onChange={handleGifChange}
-            accept="image/gif,video/mp4,video/mov,video/quicktime,youtube,vimeo"
-            required
+          <label>GIF*</label>
+          <FilePicker
+            loading={loading}
+            setLoading={setLoading}
           />
-          <label htmlFor="gifUpload" className={gifSelected ? 'gif-selected' : ''}>
-            <img ref={gifRef} className="preview" src="" />
-            <div className="content">
-              <object className="fade-up" type="image/svg+xml" data={uploadRegular} width="34" height="32">Select GIF</object>
-              Select GIF
-              <p className="types">Upload a GIF, MP4, or MOV</p>
-            </div>
-          </label>
         </div>
 
         <div className="input-wrapper">
-          <label htmlFor="title">Title</label>
-          <Form.Field name='title' placeholder="Title" />
+          <label htmlFor="title">Title*</label>
+          <Form.Field name='title' placeholder="Title" disabled={loading ? true : false} required />
           <Form.Message for='title'/>
         </div>
 
         <div className="input-wrapper">
-          <label htmlFor="tags">Tags</label>
-          <Form.Field type="text" name="tags" id="tags" placeholder="Tags" required />
+          <label htmlFor="tags">Tags*</label>
+          <TagInput tags={tags} setTags={setTags} loading={loading} />
         </div>
 
         <hr />
 
         <div className="input-wrapper">
-          <Button type="secondary" title="Submit" htmlType="submit">Submit</Button>
+          <Button type="secondary" title="Submit" htmlType="submit" disabled={loading ? true : false}>
+            {loading ? <object className="fade-up" type="image/svg+xml" data={loader} width="20px" height="16px">Loading</object> : 'Submit'}
+          </Button>
         </div>
         
       </Form>

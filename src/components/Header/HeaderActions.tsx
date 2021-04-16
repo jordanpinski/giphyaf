@@ -4,7 +4,6 @@ import { Button } from '../Button';
 import { uploadRegular } from '../../assets/icons';
 import HeaderProfile from './HeaderProfile';
 
-
 interface Props {
 
 }
@@ -14,12 +13,17 @@ const HeaderActions: React.FC<Props> = () => {
   const mySky = useStoreState((state: any) => state.mySky);
   const loggedIn = useStoreState((state: any) => state.loggedIn);
   const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
+  const setUserID = useStoreActions((actions: any) => actions.setUserID);
 
   const handleLogin = async () => {
     if (!mySky) return;
 
     const status = await mySky.requestLoginAccess();
     setLoggedIn(status);
+
+    if (status) {
+      setUserID(await mySky.userID());
+    }
   }
 
   return (

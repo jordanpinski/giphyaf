@@ -8,6 +8,7 @@ interface Props {
   title?: string
   loading?: boolean
   onClick?: any
+  disabled?: boolean
   children?: any
 }
 
@@ -17,6 +18,7 @@ const Button: React.FC<Props> = ({
   htmlType,
   title,
   loading = false,
+  disabled = false,
   onClick = () => {},
   children
 }) => {
@@ -31,6 +33,7 @@ const Button: React.FC<Props> = ({
         className={type !== '' ? `button button--${type}` : 'button'}
         title={title}
         onClick={onClick}
+        disabled={disabled}
       >
         {children}
         {loading ? 'loading..' : ''}

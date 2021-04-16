@@ -11,12 +11,10 @@ export default createStore({
       localStorage.setItem('loggedIn', 'false');
     }
   }),
-  mySky: false,
-  setMySky: action((state, payload) => {
-    state.mySky = payload;
-  }),
-  mySkyLoading: true,
-  setMySkyLoading: action((state, payload) => {
-    state.loading = payload;
-  })
+  mySky: null,
+  setMySky: action((state, payload) => { state.mySky = payload }),
+  skynetClient: null,
+  setSkynetClient: action((state, payload) => { state.skynetClient = payload }),
+  userID: '',
+  setUserID: action((state, payload) => { state.userID = payload })
 })

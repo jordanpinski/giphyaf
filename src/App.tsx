@@ -8,23 +8,28 @@ import {
 } from 'react-router-dom';
 import {
   Home,
-  Upload
+  Upload,
+  MyUploads
 } from './pages';
 
 const App = () => {
 
   const setMySky = useStoreActions((action: any) => action.setMySky);
+  const setSkynetClient = useStoreActions((action: any) => action.setSkynetClient);
   const setLoggedIn = useStoreActions((action: any) => action.setLoggedIn);
+  const setUserID = useStoreActions((action: any) => action.setUserID);
 
   useEffect(() => {
     initMySky().then((data) => {
-      const { mySky, loggedIn } = data;
+      const { mySky, skynetClient, loggedIn, userID } = data;
 
       setMySky(mySky);
+      setSkynetClient(skynetClient);
       setLoggedIn(loggedIn);
+      setUserID(userID);
       
     }).catch((error) => {
-      console.log(error)
+      console.log(error);
     })
   });
 
@@ -38,6 +43,10 @@ const App = () => {
 
       <Route exact path="/upload">
         <Upload />
+      </Route>
+
+      <Route exact path="/my-uploads">
+        <MyUploads />
       </Route>
 
     </Switch>
