@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { useStoreState } from 'easy-peasy';
 import Form from 'react-formal';
 import { uploadRegular, loader } from '../../assets/icons';
 import './FilePicker.css';

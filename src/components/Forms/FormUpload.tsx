@@ -7,13 +7,12 @@ import FilePicker from './FilePicker';
 import TagInput from './TagInput';
 import { loader } from '../../assets/icons';
 import './Form.css';
-import { mySkyDomain } from 'skynet-js';
 
 const formSchema  = yup.object({
   title: yup.string().required('Title is required')
 });
 
-const FormUpload: React.FC = () => {
+const FormUploadTest: React.FC = () => {
 
   // Local state
   const [tags, setTags] = useState<string[]>([]);
@@ -27,6 +26,7 @@ const FormUpload: React.FC = () => {
   const handleSubmit = async (values: any) => {
     setLoading(true);
     const { gifUpload: file, title } = values;
+    const filepath = `${mySky.hostDomain}/myfilename`;
 
     // Upload the file.
     const { skylink } = await skynetClient.uploadFile(file);
@@ -40,14 +40,14 @@ const FormUpload: React.FC = () => {
       skylinkUrl,
       tags,
       date: Date.now()
-    }
+    };
+    
     
     // Write JSON data to MySky
     try {
-      console.log(mySky);
-      console.log('userID', userID);
-      console.log('filepath', mySky.hostDomain)
-      const { data, skylink } = await mySky.setJSON(`localhost/`, json);
+      console.log(filepath, json);
+      console.log({userID})
+      const { data, skylink } = await mySky.setJSON(filepath, json);
       console.log({data, skylink});
     } catch (error) {
       console.error('Error uploading JSON', error)
@@ -98,4 +98,4 @@ const FormUpload: React.FC = () => {
   )
 }
 
-export default FormUpload;
+export default FormUploadTest;
