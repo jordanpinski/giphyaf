@@ -40,7 +40,7 @@ const TagInput: React.FC<Props> = ({
   const renderLayout = (tagComponents: any, inputComponent: any) => {
     return (
       <span>
-        <div className="tag-wrapper">
+        <div className={ loading ? 'tag-wrapper loading' : 'tag-wrapper'}>
           {tagComponents}
         </div>
         {inputComponent}

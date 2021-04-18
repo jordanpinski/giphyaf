@@ -3,6 +3,10 @@
 * Gif.css
 *
 * ---------------------------*/
+.gif {
+  margin-bottom: 2.5rem;
+}
+
 .gif .image {
   content: '';
   width: 100%;
@@ -10,10 +14,18 @@
   background: #5B5B5B;
   border-radius: 2px;
   transition: all 0.15s ease;
+  overflow: hidden;
 }
 
 .gif .image:hover {
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
+
+.gif .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .gif .meta {
@@ -44,4 +56,18 @@
   margin-right: 0.45rem;
   font-size: 0.875rem; /* 14px */
   color: rgba(255, 255, 255, 0.7);
+}
+
+@media screen and (max-width: 575px) {
+  .gif .image {
+    position: relative;
+    height: 0;
+    padding-top: 100%;
+  }
+
+  .gif .image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }

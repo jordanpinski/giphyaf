@@ -28,7 +28,7 @@ body {
 * ---------------------------------*/
 .container {
   width: 100%;
-  max-width: 992px;
+  max-width: 1020px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -38,12 +38,12 @@ body {
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  padding: 0 1rem;
   box-sizing: border-box;
 }
 
 .column {
   width: 100%;
+  padding: 0 1rem;
   box-sizing: border-box;
 }
 
@@ -85,6 +85,18 @@ body {
 
 .column.column-3 {
   width: calc((100% / 12) * 3);
+}
+
+@media screen and (min-width: 767px) {
+  .column.column-md-4 {
+    width: calc((100% / 12) * 4) !important;
+  }
+}
+
+@media screen and (min-width: 991px) {
+  .column.column-lg-3 {
+    width: calc((100% / 12) * 3) !important;
+  }
 }
 
 /* ---------------------------------

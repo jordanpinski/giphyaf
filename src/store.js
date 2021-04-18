@@ -13,8 +13,12 @@ export default createStore({
   }),
   mySky: null,
   setMySky: action((state, payload) => { state.mySky = payload }),
+  contentRecordDAC: null,
+  setContentRecordDAC: action((state, payload) => { state.contentRecordDAC = payload }),
   skynetClient: null,
   setSkynetClient: action((state, payload) => { state.skynetClient = payload }),
   userID: '',
-  setUserID: action((state, payload) => { state.userID = payload })
+  setUserID: action((state, payload) => { state.userID = payload }),
+  userFilepath: '',
+  setUserFilePath: action((state, payload) => { state.userFilepath = payload })
 })

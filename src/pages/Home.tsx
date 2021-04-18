@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Gif from '../components/Gif';
@@ -8,6 +8,11 @@ interface Props {
 }
 
 const Home: React.FC<Props> = () => {
+  
+  useEffect(() => {
+    document.title = 'Home - giphyaf';
+  })
+
   return (
     <>
       <Header />

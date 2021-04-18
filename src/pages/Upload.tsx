@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { FormUpload } from '../components/Forms';
 import Header from '../components/Header';
@@ -10,9 +10,14 @@ interface Props {
 
 const Upload: React.FC<Props> = () => {
 
+  // Global state
   const mySky = useStoreState((state: any) => state.mySky);
   const loggedIn = useStoreState((state: any) => state.loggedIn);
   const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
+
+  useEffect(() => {
+    document.title = 'Upload GIF - giphyaf';
+  })
 
   const handleLogin = async (event: any) => {
     event.preventDefault();

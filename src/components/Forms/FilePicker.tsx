@@ -35,7 +35,7 @@ const FilePicker: React.FC<Props> = ({
         gifRef.current.src = src;
         setGifSelected(true);
         setLoading(false);
-      }, 500);
+      }, 250);
 
     }
   }

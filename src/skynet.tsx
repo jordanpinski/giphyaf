@@ -7,9 +7,10 @@ const hostApp = 'localhost';
 
 type MySky = {
   mySky: any
+  contentRecordDAC: any
   skynetClient: any
   loggedIn: boolean
-  userID: string 
+  userID: string
 }
 
 /**
@@ -18,6 +19,7 @@ type MySky = {
  */
 async function initMySky() : Promise<MySky> {
   let mySky;
+  let contentRecordDAC;
   let skynetClient = client;
   let loggedIn = false;
   let userID = '';
@@ -28,10 +30,11 @@ async function initMySky() : Promise<MySky> {
     mySky = await client.loadMySky(hostApp);
 
     // Initialize DAC, auto-adding permissions.
-    const dac = new ContentRecordDAC();
+    contentRecordDAC = new ContentRecordDAC();
 
+    // Load dac into MySky
     // @ts-ignore
-    await mySky.loadDacs(dac);
+    await mySky.loadDacs(contentRecordDAC);
   
     // Attempt silent login
     loggedIn = await mySky.checkLogin();
@@ -43,8 +46,10 @@ async function initMySky() : Promise<MySky> {
   } catch (e) {
     console.log(e);
   }
+
   return {
     mySky,
+    contentRecordDAC,
     skynetClient,
     loggedIn,
     userID

@@ -14,20 +14,25 @@ import {
 
 const App = () => {
 
+  // Global state
   const setMySky = useStoreActions((action: any) => action.setMySky);
+  const setContentRecordDAC = useStoreActions((action: any) => action.setContentRecordDAC);
   const setSkynetClient = useStoreActions((action: any) => action.setSkynetClient);
   const setLoggedIn = useStoreActions((action: any) => action.setLoggedIn);
   const setUserID = useStoreActions((action: any) => action.setUserID);
+  const setUserFilePath = useStoreActions((action: any) => action.setUserFilePath)
 
   useEffect(() => {
     initMySky().then((data) => {
-      const { mySky, skynetClient, loggedIn, userID } = data;
+      const { mySky, contentRecordDAC, skynetClient, loggedIn, userID } = data;
 
       setMySky(mySky);
+      setContentRecordDAC(contentRecordDAC);
       setSkynetClient(skynetClient);
       setLoggedIn(loggedIn);
       setUserID(userID);
-      
+      setUserFilePath(`${mySky.hostDomain}/data.json`);
+
     }).catch((error) => {
       console.log(error);
     })
