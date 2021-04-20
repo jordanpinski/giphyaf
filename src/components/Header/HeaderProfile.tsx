@@ -20,7 +20,11 @@ const HeaderProfile: React.FC<Props> = () => {
 
   const logOut = async (event: any) => {
     event.preventDefault();
-    await mySky.logout();
+    try {
+      await mySky.logout();
+    } catch (error) {
+      console.error(error);
+    }
     setLoggedIn(false);
     setUserID('');
   }

@@ -105,12 +105,17 @@ body {
 *
 * ---------------------------------*/
 .page {
-  margin-top: 100px;
+  min-height: calc(100vh - 300px);
+  margin: 100px 0 0 0;
   color: white;
 }
 
 .page h1 {
   font-weight: 900;
+}
+
+.page p {
+  line-height: 1.5;
 }
 
 .page p a {
@@ -121,6 +126,33 @@ body {
 
 .page p a:hover {
   color: rgba(197, 255, 0, 0.9);
+}
+
+/* ---------------------------------
+*
+* HERO
+*
+* ---------------------------------*/
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 300px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  box-sizing: border-box;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.hero h1 {
+  margin-top: 0;
+}
+
+.hero p {
+  margin: 0 0 1.5rem 0;
 }
 
 /* ---------------------------------

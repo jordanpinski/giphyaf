@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useStore, useStoreState } from 'easy-peasy';
+import { upload, UploadType } from '../../skynet';
 import * as yup from 'yup';
 import Form from 'react-formal';
 import { Button } from '../Button';
@@ -17,7 +18,6 @@ const FormUploadTest: React.FC = () => {
   // Local state
   const [tags, setTags] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [data, setData] = useState<any[]>([]);
 
   // Store state
@@ -26,76 +26,23 @@ const FormUploadTest: React.FC = () => {
   const skynetClient = useStoreState((state: any) => state.skynetClient);
   const userFilepath = useStoreState((state: any) => state.userFilepath);
 
-  // Get existing data
-  useEffect(() => {
-    if (!mySky) return;
-
-    mySky.getJSON(userFilepath).then((tempData: any) => {
-      const { data } = tempData;
-      if (!data) {
-        setDataLoading(false);
-        return;
-      };
-
-      setData(data);
-      setDataLoading(false);
-    }).catch((error: any) => console.error(error) );
-
-  }, [userFilepath])
-
   const handleSubmit = async (values: any) => {
+    if (!mySky) return;
     setLoading(true);
     const { gifUpload: file, title } = values;
 
-    // Upload the file.
-    const { skylink } = await skynetClient.uploadFile(file);
-
-    // Get the file's URL.
-    const skylinkUrl = await skynetClient.getSkylinkUrl(skylink);
-
-    const json = [{
-      title,
-      skylink,
-      skylinkUrl,
-      tags,
-      date: Date.now()
-    }, ...data ];
-
-    // Write JSON data to MySky
-    try {
-      const { data, skylink } = await mySky.setJSON(userFilepath, json);
-
-      console.log({contentRecordDAC, skylinkUrl})
-
-      if (data.length === 1) {
-
-        console.log('NEW CONTENT RECORD');
-
-        // Record new content in the DAC
-        await contentRecordDAC.recordNewContent({
-          skylink: skylinkUrl
-        });
-
-      } else {
-
-        console.log('UPDATE CONTENT RECORD');
-
-        // Update content in the DAC.
-        await contentRecordDAC.updateContentRecord({
-          skylink: skylinkUrl,
-          metaData: { action: 'updatedGifs' }
-        });
-
-      }
-
-
-    } catch (error) {
-      console.error('Error uploading JSON', error)
+    // TODO: Validate all form data before proceding.
+    const uploadData: UploadType = {
+      file: file,
+      title: title,
+      tags: tags
     }
+
+    const result = await upload(uploadData, skynetClient, mySky, userFilepath);
 
     setLoading(false);
 
-    window.location.href = '/my-uploads';
+    //window.location.href = '/my-uploads';
   }
 
   return (
@@ -103,9 +50,6 @@ const FormUploadTest: React.FC = () => {
       <h1>Upload GIF</h1>
       <p>Use this form to upload your awesome GIF ✌❤😎. When you're ready just hit submit.</p>
 
-      {dataLoading ? 
-        <object className="fade-up" type="image/svg+xml" data={loader} width="80px">Loading</object>
-        :
         <Form
           shema={formSchema}
           onSubmit={handleSubmit}
@@ -139,7 +83,6 @@ const FormUploadTest: React.FC = () => {
         </div>
         
       </Form>
-      }
 
     </>
   )

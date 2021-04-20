@@ -22,10 +22,11 @@ const MyUploads: React.FC<Props> = () => {
   useEffect(() => {
     document.title = 'My Uploads - giphyaf';
     if (!mySky) return;
-    const filepath = `${mySky.hostDomain}/data.json`;
+    const filepath = `${mySky.hostDomain}/posts/data.json`;
     mySky.getJSON(filepath).then((data: any) => {
       setData(data.data);
       setLoading(false);
+      console.log(data);
     });
   }, [mySky])
 
@@ -46,22 +47,23 @@ const MyUploads: React.FC<Props> = () => {
                 </div>
               )
               :
-              data ? data.map((gif: any, index: number) => {
-                console.log(gif);
-                return (
-                  <div className="column column-6 column-lg-3 column-md-4" key={index}>
-                    <Gif
-                      title={gif.title}
-                      skyLinkUrl={gif.skylinkUrl}
-                      tags={gif.tags}
-                    />
-                  </div>
-                )
-              }) : (
-                <div className="column column-12">
-                  <p>Oh no! It looks like you haven't uploaded any GIFs yet. When you're ready try <a href="/upload" title="Uploading">uploading</a> one!</p>
-                </div>
-              )
+              null
+              // data ? data.map((gif: any, index: number) => {
+              //   console.log(gif);
+              //   return (
+              //     <div className="column column-6 column-lg-3 column-md-4" key={index}>
+              //       <Gif
+              //         title={gif.title}
+              //         skyLinkUrl={gif.skylinkUrl}
+              //         tags={gif.tags}
+              //       />
+              //     </div>
+              //   )
+              // }) : (
+              //   <div className="column column-12">
+              //     <p>Oh no! It looks like you haven't uploaded any GIFs yet. When you're ready try <a href="/upload" title="Uploading">uploading</a> one!</p>
+              //   </div>
+              // )
             }
 
           </div>

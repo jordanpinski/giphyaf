@@ -31,7 +31,7 @@ const App = () => {
       setSkynetClient(skynetClient);
       setLoggedIn(loggedIn);
       setUserID(userID);
-      setUserFilePath(`${mySky.hostDomain}/data.json`);
+      setUserFilePath(`${mySky.hostDomain}/`);
 
     }).catch((error) => {
       console.log(error);
