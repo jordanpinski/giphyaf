@@ -32,10 +32,6 @@
   animation: 750ms forwards fadeUp;
 }
 
-.react-tagsinput .tag-wrapper .react-tagsinput-tag.loading {
-  
-}
-
 .react-tagsinput .tag-wrapper .react-tagsinput-tag:hover {
   background: rgba(53, 180, 255, 0.902);
 }

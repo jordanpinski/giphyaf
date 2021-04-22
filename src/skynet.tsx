@@ -1,17 +1,20 @@
 import react from 'react';
 import { SkynetClient, genKeyPairFromSeed } from 'skynet-js';
 import { ContentRecordDAC } from "@skynetlabs/content-record-library";
+//import { FeedDAC } from "feed-dac-library";
 
+const devMode = true;
 const client = new SkynetClient('https://siasky.net/');
-const dataDomain = 'localhost';
+const dataDomain = devMode ? 'localhost' : 'giphyaf.hns';
+
+let mySky: any;
+let contentRecordDAC: any;
 
 /**
  * Initializes MySky
  * @returns object - An object with the following properties: mySky, skynetClient, loggedIn, userID
  */
 async function initMySky() : Promise<any> {
-  let mySky;
-  let contentRecordDAC;
   let skynetClient = client;
   let loggedIn = false;
   let userID = '';
@@ -19,7 +22,10 @@ async function initMySky() : Promise<any> {
   try {
 
     // Initiate MySky
-    mySky = await client.loadMySky(dataDomain);
+    mySky = await client.loadMySky(dataDomain, {
+      dev: true,
+      debug: true
+    });
 
     // Initialize DAC, auto-adding permissions.
     contentRecordDAC = new ContentRecordDAC();
@@ -54,42 +60,85 @@ type UploadType = {
   tags: string[]
 }
 
-async function upload(upload: UploadType, skynetClient: any, mySky: any, filePath: string): Promise<boolean> {
+/**
+ * Gets all content record entries for this data domain.
+ * @param mySky
+ */
+async function getUserEntries(mySky: any): Promise<any> {
+  const indexFilePath = `crqa.hns/${dataDomain}/newcontent/index.json`;
+  let entries;
+
+  try {
+    const { data: { pages }} = await mySky.getJSON(indexFilePath);
+    entries = await getAllEntries(pages);
+
+  } catch (error) {
+    console.error(error);
+  }
+
+  return entries;
+}
+
+/**
+ * Gets the data for all pages
+ * @param page 
+ */
+async function getAllEntries(pages: string[]) {
+  let entries: any[] = [];
+
+  for (const page of pages) {
+    try {
+      const data = await mySky.getJSON(page);
+      entries = [...entries, ...data.data.entries];
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return entries;
+}
+
+/**
+ * Uploads a GIF and records a new content record.
+ * @param upload 
+ * @param skynetClient 
+ * @param mySky 
+ * @param contentRecordDAC 
+ * @param filePath 
+ * @returns boolean
+ */
+async function upload(upload: UploadType): Promise<any> {
 
   const { file, title, tags } = upload;
 
-  const { skylinkUrl } = await uploadImage(file, skynetClient);
+  const { skylinkUrl } = await uploadImage(file, client);
 
-  // Create the post JSON object.
+  // // Create the post JSON object.
   const json = {
-    $schema: "sia://skystandards.hns/v1/post.schema.json",
-    id: Date.now(),
-    content: {
-      media: {
-        image: [
-          {
-            ext: file.type,
-            url: skylinkUrl,
-          }
-        ]
-      },
-      topics: tags,
-      ts: Date.now()
-    }
+    image: {
+      ext: file.type,
+      url: skylinkUrl,
+    },
+    title: title,
+    tags: tags,
   };
 
   try {
 
-    await appendUserPosts(filePath, json, mySky);
-    await appendGlobalPosts(json, skynetClient);
-
-    // Record event in DACs
+    // Record event in content record DAC
+    const status = await contentRecordDAC.recordNewContent({
+      json,
+      metadata: {'action': 'created'}
+    });
 
   } catch (error) {
     console.error('Error uploading JSON', error);
   }
 
-  return true;
+  // Artificial timeout so that DAC has enough time to update.
+  return new Promise(resolve => setTimeout(resolve, 2500));
+
+  //return true;
 }
 
 /**
@@ -113,74 +162,10 @@ async function uploadImage(file: any, skynetClient: any): Promise<{skylink: stri
 
 }
 
-/**
- * Appends the users JSON file that records each post.
- */
-async function appendUserPosts(filePath: string, json: any, mySky: any) {
-
-  try {
-    // Get JSON record for all of the current users posts.
-    const { data } = await mySky.getJSON(`${filePath}/posts/data.json`);
-
-    // Append new post to the JSON record.
-    if (data) {
-      console.log('Appending new post')
-      await mySky.setJSON(`${filePath}/posts/data.json`, [json, ...data])
-    } else {
-      await mySky.setJSON(`${filePath}/posts/data.json`, [json]);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-
-}
-
-/**
- * Appends a global JSON record that references every post. Used for the home page feed.
- * Definitly not a long term solution ^
- * @param json 
- * @param skynetClient 
- */
-async function appendGlobalPosts(json: any, skynetClient: any) {
-  const { publicKey } = genKeyPairFromSeed('hello this is giphyaf sounding off');
-
-  try {
-    
-    // Get the file.
-    console.log('getting global posts file');
-    const { data, skylink } = await skynetClient.db.getJSON(publicKey, dataDomain);
-
-    if (data) {
-      console.log('setting JSON')
-      await skynetClient.db.setJSON(publicKey, dataDomain, [json, ...data]);
-    } else {
-      console.log('setting JSON')
-      await skynetClient.db.setJSON(publicKey, dataDomain, [json]);
-    }
-
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function getGlobalPosts(skynetClient: any) {
-  const { publicKey } = genKeyPairFromSeed('hello this is giphyaf sounding off');
-  let posts;
-
-  try {
-    const { data, skylink } = await skynetClient.db.getJSON(publicKey, dataDomain);
-    posts = data;
-  } catch(error) {
-    console.log(error);
-  }
-
-  return posts;
-}
-
 export {
   initMySky,
   upload,
-  getGlobalPosts
+  getUserEntries
 }
 
 export type {

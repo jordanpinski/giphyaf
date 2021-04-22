@@ -11,14 +11,21 @@
   content: '';
   width: 100%;
   height: 240px;
-  background: #5B5B5B;
+  background-color: rgb(0, 0, 0);
+  background-image: linear-gradient(
+45deg
+, rgb(14, 14, 14) 25%, transparent 25%, transparent 75%, rgb(14, 14, 14) 75%), linear-gradient(
+45deg
+, rgb(14, 14, 14) 25%, transparent 25%, transparent 75%, rgb(14, 14, 14) 75%);
+  background-size: 24px 24px;
+  background-position: 0px 0px, 12px 12px;
   border-radius: 2px;
   transition: all 0.15s ease;
   overflow: hidden;
 }
 
 .gif .image:hover {
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
 .gif .image img {

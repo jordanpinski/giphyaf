@@ -157,11 +157,45 @@ body {
 
 /* ---------------------------------
 *
+* LOADING OVERLAY
+*
+* ---------------------------------*/
+.loading-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ---------------------------------
+*
 * ANIMATIONS
 *
 * ---------------------------------*/
 .fade-up {
   animation: 750ms forwards fadeUp;
+}
+
+.gradient-one {
+  background: linear-gradient(270deg, #eeaeca, #94bbe9);
+  background-size: 200% 200%;
+
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+}
+
+.gradient-two {
+  background: linear-gradient(270deg, #dc6e9e, #71a0d8);
+  background-size: 200% 200%;
+
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
 }
 
 @keyframes fadeUp {
@@ -173,4 +207,20 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@-webkit-keyframes Gradient {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes Gradient {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes Gradient {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }

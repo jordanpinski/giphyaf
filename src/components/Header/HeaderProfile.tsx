@@ -22,11 +22,12 @@ const HeaderProfile: React.FC<Props> = () => {
     event.preventDefault();
     try {
       await mySky.logout();
+      setLoggedIn(false);
+      setUserID('');
+      window.location.href = '/';
     } catch (error) {
       console.error(error);
     }
-    setLoggedIn(false);
-    setUserID('');
   }
 
   return (
@@ -34,7 +35,7 @@ const HeaderProfile: React.FC<Props> = () => {
       <Avatar text="Profile" width={50} height={50} />
       <Menu visible={menuVisible}>
         <ul>
-          <li><a href="/my-uploads" title="My Uploads">My Uploads</a></li>
+          <li><a href="/" title="My Uploads">My Uploads</a></li>
           <li><a href="/" title="Log Out" onClick={logOut}>Log Out</a></li>
         </ul>
       </Menu>

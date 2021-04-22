@@ -48,6 +48,7 @@ const Button: React.FC<Props> = ({
         className={type !== '' ? `button button--${type}` : 'button'}
         title={title}
         onClick={onClick}
+        data-disabled={disabled}
       >
         {children}
         {loading ? 'loading..' : ''}

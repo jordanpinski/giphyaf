@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { FormUpload } from '../components/Forms';
+import GifUploader from '../components/GifUploader';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -34,7 +34,9 @@ const Upload: React.FC<Props> = () => {
         <div className="container">
           <div className="row">
             <div className="column column-12">
-              {loggedIn ? <FormUpload /> : (
+              {loggedIn ? 
+                <GifUploader />
+              : (
                 <>
                   <h1>Upload GIF</h1>
                   <div className="notification">

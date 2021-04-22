@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Button } from '../Button';
-import { uploadRegular } from '../../assets/icons';
+import { uploadRegular, plusRegular } from '../../assets/icons';
 import HeaderProfile from './HeaderProfile';
 
 interface Props {
@@ -29,11 +29,19 @@ const HeaderActions: React.FC<Props> = () => {
   return (
     <div className="actions">
       <Button
+        href="#"
+        type="primary"
+        title="Create GIF"
+        disabled={true}
+      >
+        <object className="fade-up" type="image/svg+xml" data={plusRegular} width="20" height="18">Create Icon</object> Create
+      </Button>
+      <Button
         href="/upload"
         type="primary"
         title="Upload GIF"
       >
-        <object className="fade-up" type="image/svg+xml" data={uploadRegular} width="20" height="18">Upload Icon</object> Upload GIF
+        <object className="fade-up" type="image/svg+xml" data={uploadRegular} width="20" height="18">Upload Icon</object> Upload
       </Button>
 
       {loggedIn ?

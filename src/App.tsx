@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useStoreActions } from 'easy-peasy';
 import { initMySky } from './skynet';
 import {
@@ -9,10 +9,15 @@ import {
 import {
   Home,
   Upload,
-  MyUploads
+  MyUploads,
+  Gif
 } from './pages';
+import { loader } from './assets/icons';
 
 const App = () => {
+
+  // Local state
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Global state
   const setMySky = useStoreActions((action: any) => action.setMySky);
@@ -32,13 +37,18 @@ const App = () => {
       setLoggedIn(loggedIn);
       setUserID(userID);
       setUserFilePath(`${mySky.hostDomain}/`);
+      setLoading(false);
 
     }).catch((error) => {
       console.log(error);
     })
   });
 
-  return (
+  return loading ? (
+    <div className="loading-overlay">
+      <object className="fade-up" type="image/svg+xml" data={loader} width="80px">Loading</object>
+    </div>
+  ) : (
     <Router>
     <Switch>
 
@@ -52,6 +62,10 @@ const App = () => {
 
       <Route exact path="/my-uploads">
         <MyUploads />
+      </Route>
+
+      <Route exact path="/gif">
+        <Gif />
       </Route>
 
     </Switch>

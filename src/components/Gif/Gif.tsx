@@ -17,7 +17,7 @@ const Gif: React.FC<Props> = ({
 
   return (
     <div className="gif fade-up">
-      <a href="/" title={title}>
+      <a href="/gif" title={title}>
         <div className="image">
           <LazyImage
             src={skyLinkUrl}

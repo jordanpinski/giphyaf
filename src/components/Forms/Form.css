@@ -7,6 +7,7 @@ form {
   padding: 2rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
+  box-shadow: 0 5px 12px rgb(0 0 0 / 20%);
 }
 
 form hr {
@@ -16,8 +17,9 @@ form hr {
 
 form .input-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 2rem;
 }
 
@@ -27,18 +29,35 @@ form .input-wrapper:last-of-type {
 
 form .input-wrapper label {
   min-width: 50px;
-  margin-right: 1rem;
+  margin: 0 0 0.7rem 0;
+  font-weight: bold;
 }
 
 form .input-wrapper input[type="text"] {
+  width: 100%;
   padding: 12px 14px;
   outline: none;
   border: none;
+  border-radius: 2px;
   box-sizing: border-box;
 }
 
+form .input-wrapper .input-description {
+  padding: 0.5rem;
+  text-align: left;
+  font-size: 0.8rem;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.2)
+}
+
 form button[type="submit"] {
+  margin-top: 1rem;
   min-width: 85px;
+}
+
+
+form button[type="submit"]:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 form button[type="submit"] object {

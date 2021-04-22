@@ -1,91 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { useStore, useStoreState } from 'easy-peasy';
-import { upload, UploadType } from '../../skynet';
-import * as yup from 'yup';
-import Form from 'react-formal';
+import React, { useState } from 'react';
 import { Button } from '../Button';
-import FilePicker from './FilePicker';
-import TagInput from './TagInput';
-import { loader } from '../../assets/icons';
+import { useForm } from 'react-hook-form';
+import { upload, UploadType } from '../../skynet';
 import './Form.css';
 
-const formSchema  = yup.object({
-  title: yup.string().required('Title is required')
-});
+interface Props {
+  file: any
+  loading: boolean
+  setLoading: any
+}
 
-const FormUploadTest: React.FC = () => {
+const FormUpload: React.FC<Props> = ({
+  file,
+  loading,
+  setLoading
+}) => {
 
   // Local state
-  const [tags, setTags] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<any[]>([]);
+  //const [loading, setLoading] = useState<boolean>(false);
 
-  // Store state
-  const mySky = useStoreState((state: any) => state.mySky);
-  const contentRecordDAC = useStoreState((state: any) => state.contentRecordDAC);
-  const skynetClient = useStoreState((state: any) => state.skynetClient);
-  const userFilepath = useStoreState((state: any) => state.userFilepath);
+  // React Hook Form
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-  const handleSubmit = async (values: any) => {
-    if (!mySky) return;
+  const onSubmit = async (data: any) => {
     setLoading(true);
-    const { gifUpload: file, title } = values;
-
-    // TODO: Validate all form data before proceding.
+    const { title, tags } = data;
     const uploadData: UploadType = {
-      file: file,
-      title: title,
-      tags: tags
+      file,
+      title,
+      tags: tags.split(',').map((tag: string) => tag.trim())
     }
 
-    const result = await upload(uploadData, skynetClient, mySky, userFilepath);
-
+    await upload(uploadData);
     setLoading(false);
-
-    //window.location.href = '/my-uploads';
+    window.location.href = '/';
   }
 
   return (
-    <>
-      <h1>Upload GIF</h1>
-      <p>Use this form to upload your awesome GIF ✌❤😎. When you're ready just hit submit.</p>
+    <form name="form-upload" className="gradient-one" onSubmit={handleSubmit(onSubmit)}>
 
-        <Form
-          shema={formSchema}
-          onSubmit={handleSubmit}
-        >
+      <div className="input-wrapper">
+        <label htmlFor="tags">Title</label>
+        <input id="tags" type="text" placeholder="title" {...register("title")} />
+      </div>
+      
+      <div className="input-wrapper">
+        <label htmlFor="tags">Tags</label>
+        <input id="tags" type="text" placeholder="tag 1, tag 2, tag 3" {...register("tags")} />
+        <p className="input-description">When global feeds/search are implemented, tags will help users find your GIFs.</p>
+      </div>
 
-        <div className="input-wrapper">
-          <label>GIF*</label>
-          <FilePicker
-            loading={loading}
-            setLoading={setLoading}
-          />
-        </div>
+      <Button type="secondary" title="Submit" htmlType="submit" disabled={loading ? true : false}>
+        {/* {loading ? <object className="fade-up" type="image/svg+xml" data={loader} width="20px" height="16px">Loading</object> : 'Submit'} */}
+        Upload To giphyaf
+      </Button>
 
-        <div className="input-wrapper">
-          <label htmlFor="title">Title*</label>
-          <Form.Field name='title' placeholder="Title" disabled={loading ? true : false} required />
-          <Form.Message for='title'/>
-        </div>
-
-        <div className="input-wrapper">
-          <label htmlFor="tags">Tags*</label>
-          <TagInput tags={tags} setTags={setTags} loading={loading} />
-        </div>
-
-        <hr />
-
-        <div className="input-wrapper">
-          <Button type="secondary" title="Submit" htmlType="submit" disabled={loading ? true : false}>
-            {loading ? <object className="fade-up" type="image/svg+xml" data={loader} width="20px" height="16px">Loading</object> : 'Submit'}
-          </Button>
-        </div>
-        
-      </Form>
-
-    </>
+    </form>
   )
 }
 
-export default FormUploadTest;
+export default FormUpload;
