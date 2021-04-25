@@ -5,7 +5,8 @@
 * ---------------------------*/
 form {
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.1);
+  /* background: rgba(255, 255, 255, 0.1); */
+  background: rgb(27 27 27);
   border-radius: 2px;
   box-shadow: 0 5px 12px rgb(0 0 0 / 20%);
 }
@@ -23,10 +24,6 @@ form .input-wrapper {
   margin-bottom: 2rem;
 }
 
-form .input-wrapper:last-of-type {
-  margin-bottom: 0;
-}
-
 form .input-wrapper label {
   min-width: 50px;
   margin: 0 0 0.7rem 0;
@@ -42,19 +39,10 @@ form .input-wrapper input[type="text"] {
   box-sizing: border-box;
 }
 
-form .input-wrapper .input-description {
-  padding: 0.5rem;
-  text-align: left;
-  font-size: 0.8rem;
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.2)
-}
-
 form button[type="submit"] {
   margin-top: 1rem;
   min-width: 85px;
 }
-
 
 form button[type="submit"]:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { initMySky } from './skynet';
 import {
   BrowserRouter as Router,
@@ -8,16 +8,15 @@ import {
 } from 'react-router-dom';
 import {
   Home,
+  Create,
   Upload,
   MyUploads,
-  Gif
+  GifPage
 } from './pages';
 import { loader } from './assets/icons';
+import Logo from './components/Logo';
 
 const App = () => {
-
-  // Local state
-  const [loading, setLoading] = useState<boolean>(true);
 
   // Global state
   const setMySky = useStoreActions((action: any) => action.setMySky);
@@ -26,6 +25,8 @@ const App = () => {
   const setLoggedIn = useStoreActions((action: any) => action.setLoggedIn);
   const setUserID = useStoreActions((action: any) => action.setUserID);
   const setUserFilePath = useStoreActions((action: any) => action.setUserFilePath)
+  const globalLoading = useStoreState((state: any) => state.globalLoading);
+  const setGlobalLoading = useStoreActions((action: any) => action.setGlobalLoading);
 
   useEffect(() => {
     initMySky().then((data) => {
@@ -37,16 +38,17 @@ const App = () => {
       setLoggedIn(loggedIn);
       setUserID(userID);
       setUserFilePath(`${mySky.hostDomain}/`);
-      setLoading(false);
+      setGlobalLoading(false);
 
     }).catch((error) => {
       console.log(error);
     })
   });
 
-  return loading ? (
+  return globalLoading ? (
     <div className="loading-overlay">
-      <object className="fade-up" type="image/svg+xml" data={loader} width="80px">Loading</object>
+      <Logo noLink={true} />
+      <object className="fade-up" type="image/svg+xml" data={loader} width="80px" height="200px">Loading</object>
     </div>
   ) : (
     <Router>
@@ -54,6 +56,10 @@ const App = () => {
 
       <Route exact path="/">
         <Home />
+      </Route>
+
+      <Route exact path="/create">
+        <Create />
       </Route>
 
       <Route exact path="/upload">
@@ -65,7 +71,7 @@ const App = () => {
       </Route>
 
       <Route exact path="/gif">
-        <Gif />
+        <GifPage />
       </Route>
 
     </Switch>

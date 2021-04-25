@@ -43,6 +43,10 @@
 }
 
 .gif .meta .right {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: calc(100% - 34px);
   margin: 0 0 0 1rem;
 }
 
@@ -54,6 +58,7 @@
 
 .gif .meta .right .tags {
   display: flex;
+  flex-wrap: wrap;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -65,7 +70,40 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-@media screen and (max-width: 575px) {
+.gif .meta .right .copy {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gif .meta .right .copy:hover {
+  opacity: 0.7;
+}
+
+.gif .meta .right .copy object {
+  pointer-events: none;
+}
+
+.gif .meta .right .copy .copy-effect {
+  position: absolute;
+  z-index: 50;
+  bottom: calc(100% + 1rem); 
+  left: 0;
+  transform: translate(-35%, -5%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+  background: rgb(37, 37, 37);
+  box-shadow: 0 5px 10px 10px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  font-size: 0.7rem;
+  line-height: 1;
+  background: rgb(197, 225, 0);
+  color: #006630;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@media screen and (max-width: 575px) { 
   .gif .image {
     position: relative;
     height: 0;

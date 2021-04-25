@@ -1,11 +1,13 @@
 import Home from './Home';
+import Create from './Create';
 import Upload from './Upload';
 import MyUploads from './MyUploads';
-import Gif from './Gif';
+import GifPage from './GifPage';
 
 export {
   Home,
+  Create,
   Upload,
   MyUploads,
-  Gif
+  GifPage
 }

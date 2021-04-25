@@ -3,7 +3,7 @@
 * GifUploader.css
 *
 * ---------------------------*/
-.gif-uploader {
+.gif-maker {
   position: relative;
   padding: 2rem;
   border-radius: 2px;
@@ -11,19 +11,19 @@
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
 }
 
-.gif-uploader .upload-methods {
+.gif-maker .upload-methods {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.gif-uploader .upload-methods .item {
+.gif-maker .upload-methods .item {
   width: 200px;
   height: 150px;
 }
 
-.gif-uploader.gif-selected {
+.gif-maker.gif-selected {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -33,12 +33,12 @@
   box-shadow: none;
 }
 
-.gif-uploader.gif-selected .left,
-.gif-uploader.gif-selected .right {
+.gif-maker.gif-selected .left,
+.gif-maker.gif-selected .right {
   width: 50%;
 }
 
-.gif-uploader.gif-selected .left .selected-file {
+.gif-maker.gif-selected .left .selected-file {
   position: relative;
   display: flex;
   align-items: center;
@@ -56,17 +56,32 @@
   border-radius: 2px;
 }
 
-.gif-uploader.gif-selected .left .selected-file * {
+.gif-maker.gif-selected .left .selected-file * {
   max-width: 100%;
   width: 100%;
   display: block;
 }
 
-.gif-uploader.gif-selected .right {
-  padding-left: 2rem;
+.gif-maker.gif-selected .right {
+  padding-left: 1rem;
 }
 
-.gif-uploader-loading-overlay {
+.gif-maker-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.gif-maker-header span {
+  cursor: pointer;
+}
+
+.gif-maker-header span object {
+  margin-right: 1rem;
+  pointer-events: none;
+}
+
+.gif-maker-loading-overlay {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,16 +95,16 @@
 }
 
 @media screen and (max-width: 700px) {
-  .gif-uploader.gif-selected {
+  .gif-maker.gif-selected {
     flex-direction: column;
   }
 
-  .gif-uploader.gif-selected .left,
-  .gif-uploader.gif-selected .right {
+  .gif-maker.gif-selected .left,
+  .gif-maker.gif-selected .right {
     width: 100%;
   }
 
-  .gif-uploader.gif-selected .right {
+  .gif-maker.gif-selected .right {
     padding: 1rem 0 0 0;
   }
 }

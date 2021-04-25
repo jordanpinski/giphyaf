@@ -1,5 +1,7 @@
 import react from 'react';
-import { SkynetClient, genKeyPairFromSeed } from 'skynet-js';
+// @ts-ignore
+import { SkynetClient } from 'skynet-js';
+// @ts-ignore
 import { ContentRecordDAC } from "@skynetlabs/content-record-library";
 //import { FeedDAC } from "feed-dac-library";
 
@@ -23,8 +25,8 @@ async function initMySky() : Promise<any> {
 
     // Initiate MySky
     mySky = await client.loadMySky(dataDomain, {
-      dev: true,
-      debug: true
+      dev: devMode,
+      debug: devMode
     });
 
     // Initialize DAC, auto-adding permissions.
@@ -101,10 +103,6 @@ async function getAllEntries(pages: string[]) {
 /**
  * Uploads a GIF and records a new content record.
  * @param upload 
- * @param skynetClient 
- * @param mySky 
- * @param contentRecordDAC 
- * @param filePath 
  * @returns boolean
  */
 async function upload(upload: UploadType): Promise<any> {
@@ -136,9 +134,7 @@ async function upload(upload: UploadType): Promise<any> {
   }
 
   // Artificial timeout so that DAC has enough time to update.
-  return new Promise(resolve => setTimeout(resolve, 2500));
-
-  //return true;
+  return new Promise(resolve => setTimeout(resolve, 3500));
 }
 
 /**
@@ -148,11 +144,11 @@ async function upload(upload: UploadType): Promise<any> {
 async function uploadImage(file: any, skynetClient: any): Promise<{skylink: string, skylinkUrl: string}> {
 
   // Upload the image.
-  console.log('uploading image')
+  debug(`uploading image: ${file}`);
   const { skylink } = await skynetClient.uploadFile(file);
   
   // Get the image's URL.
-  console.log('getting image url')
+  debug(`getting image url`);
   const skylinkUrl = await skynetClient.getSkylinkUrl(skylink);
 
   return {
@@ -160,6 +156,12 @@ async function uploadImage(file: any, skynetClient: any): Promise<{skylink: stri
     skylinkUrl
   }
 
+}
+
+function debug(message: string) {
+  if (devMode) {
+    console.log(message);
+  }
 }
 
 export {

@@ -17,24 +17,6 @@
 
 /* ---------------------------
 *
-* LOGO
-*
-* ---------------------------*/
-.app-header .logo {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.app-header .logo a {
-  color: #00C65E;
-  font-size: 1.065rem;
-  font-weight: 900;
-  text-decoration: none;
-}
-
-/* ---------------------------
-*
 * ACTIONS
 *
 * ---------------------------*/
@@ -43,11 +25,11 @@
   justify-content: flex-end;
 }
 
-.app-header .actions .button {
+.app-header .actions a {
   margin-right: 1rem;
 }
 
-.app-header .actions .button:last-of-type {
+.app-header .actions a:last-of-type {
   margin-right: 0;
 }
 

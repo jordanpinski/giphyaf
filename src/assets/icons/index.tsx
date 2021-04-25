@@ -4,6 +4,7 @@ import userRegular from './user-regular.svg';
 import skynetLogo from './skynet-logo.svg';
 import loader from './loader.svg';
 import arrowLeftSolid from './arrow-left-solid.svg';
+import copySolid from './copy-solid.svg';
 
 export {
   uploadRegular,
@@ -11,5 +12,6 @@ export {
   userRegular,
   skynetLogo,
   loader,
-  arrowLeftSolid
+  arrowLeftSolid,
+  copySolid
 }

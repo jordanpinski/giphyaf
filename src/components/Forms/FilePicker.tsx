@@ -1,5 +1,4 @@
 import React from 'react';
-import { uploadRegular, loader } from '../../assets/icons';
 import './FilePicker.css';
 
 interface Props {

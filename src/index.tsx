@@ -2,14 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { StoreProvider } from 'easy-peasy';
 import store from './store.js';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './app';
+// @ts-ignore
+import { NotificationContainer } from 'react-notifications';
+import './index.css';
+//import 'react-notifications/lib/notifications.css';
 
 ReactDOM.render(
   <React.StrictMode>
     <StoreProvider store={store}>
       <App />
+      <NotificationContainer />
     </StoreProvider>
   </React.StrictMode>,
   document.getElementById('root')

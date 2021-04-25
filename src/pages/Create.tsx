@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import GifUploader from '../components/GifUploader';
+import GifMaker from '../components/GifMaker';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -8,7 +8,7 @@ interface Props {
 
 }
 
-const Create: React.FC<Props> = () => {
+const Upload: React.FC<Props> = () => {
 
   // Global state
   const mySky = useStoreState((state: any) => state.mySky);
@@ -16,7 +16,7 @@ const Create: React.FC<Props> = () => {
   const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
 
   useEffect(() => {
-    document.title = 'Upload GIF - giphyaf';
+    document.title = 'Create GIF - giphyaf';
   })
 
   const handleLogin = async (event: any) => {
@@ -30,16 +30,16 @@ const Create: React.FC<Props> = () => {
   return (
     <>
       <Header />
-      <div className="page page--upload fade-up">
+      <div className="page page--create fade-up">
         <div className="container">
           <div className="row">
             <div className="column column-12">
               {loggedIn ? 
-                <GifUploader />
+                <GifMaker />
               : (
                 <>
                   <div className="hero gradient-two">
-                    <h1>Upload a GIF</h1>
+                    <h1>Create GIF</h1>
                     <p>Hey there! You'll need to login to your <a href="/" onClick={handleLogin} title="MySky Account">MySky account</a> before adding any sweet GIFs. ✌🤷‍♀️😎</p>
                   </div>
                 </>
@@ -54,4 +54,4 @@ const Create: React.FC<Props> = () => {
   )
 }
 
-export default Create;
+export default Upload;

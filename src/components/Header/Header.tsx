@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import HeaderActions from './HeaderActions';
+import Logo from '../Logo';
 import './Header.css';
 
 interface Props {
@@ -14,17 +15,15 @@ const Header: React.FC<Props> = () => {
         <div className="row">
             
           {/* Logo */}
-          <div className="column column-6">
-            <div className="logo">
-              <a href="/" title="giphyaf">giphyaf</a>
-            </div>
+          <div className="column column-3">
+            <Logo />
           </div>
 
 
           {/* Navigation */}
 
           {/* Actions */}
-          <div className="column column-6">
+          <div className="column column-9">
             <HeaderActions />
           </div>
 

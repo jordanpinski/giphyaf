@@ -1,0 +1,14 @@
+/* ---------------------------
+*
+* Card.css
+*
+* ---------------------------*/
+.card {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+}

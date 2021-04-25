@@ -29,15 +29,30 @@ const Button: React.FC<Props> = ({
     case 'submit':
       temp = (
         <button
-        type="submit"
-        className={type !== '' ? `button button--${type}` : 'button'}
-        title={title}
-        onClick={onClick}
-        disabled={disabled}
-      >
-        {children}
-        {loading ? 'loading..' : ''}
-      </button>
+          type="submit"
+          className={type !== '' ? `button button--${type}` : 'button'}
+          title={title}
+          onClick={onClick}
+          disabled={disabled}
+        >
+          {children}
+          {loading ? 'loading..' : ''}
+        </button>
+      )
+      break;
+
+    case 'button':
+      temp = (
+        <button
+          className={type !== '' ? `button button--${type}` : 'button'}
+          title={title}
+          onClick={onClick}
+          disabled={disabled}
+          data-disabled={disabled}
+        >
+          {children}
+          {loading ? 'loading..' : ''}
+        </button>
       )
       break;
 

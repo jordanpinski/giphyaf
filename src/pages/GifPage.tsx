@@ -1,19 +1,20 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import GifDetailed from '../components/GifDetailed';
 
 interface Props {
 
 }
 
-const Gif: React.FC<Props> = ({}) => {
+const GifPage: React.FC<Props> = ({}) => {
   return (
     <>
       <Header />
       <div className="page page--gif">
         <div className="container">
           <div className="row">
-
+            <GifDetailed />
           </div>
         </div>
       </div>
@@ -22,4 +23,4 @@ const Gif: React.FC<Props> = ({}) => {
   )
 }
 
-export default Gif;
+export default GifPage;
