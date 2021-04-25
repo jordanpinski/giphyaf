@@ -16,7 +16,7 @@ form hr {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-form .input-wrapper {
+.input-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -24,19 +24,25 @@ form .input-wrapper {
   margin-bottom: 2rem;
 }
 
-form .input-wrapper label {
+.input-wrapper label {
   min-width: 50px;
   margin: 0 0 0.7rem 0;
   font-weight: bold;
 }
 
-form .input-wrapper input[type="text"] {
+.input-wrapper input[type="text"],
+.input-wrapper select {
   width: 100%;
+  min-height: 44px;
   padding: 12px 14px;
   outline: none;
   border: none;
   border-radius: 2px;
   box-sizing: border-box;
+}
+
+.input-wrapper select option {
+  padding: 12px 14px;
 }
 
 form button[type="submit"] {

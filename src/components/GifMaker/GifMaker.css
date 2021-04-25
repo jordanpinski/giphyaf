@@ -23,7 +23,7 @@
   height: 150px;
 }
 
-.gif-maker.gif-selected {
+.gif-maker-editor {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -33,12 +33,12 @@
   box-shadow: none;
 }
 
-.gif-maker.gif-selected .left,
-.gif-maker.gif-selected .right {
+.gif-maker-editor .left,
+.gif-maker-editor .right {
   width: 50%;
 }
 
-.gif-maker.gif-selected .left .selected-file {
+.gif-maker-editor .left .selected-file {
   position: relative;
   display: flex;
   align-items: center;
@@ -56,15 +56,26 @@
   border-radius: 2px;
 }
 
-.gif-maker.gif-selected .left .selected-file * {
+.gif-maker-editor .left .selected-file * {
   max-width: 100%;
   width: 100%;
   display: block;
 }
 
-.gif-maker.gif-selected .right {
+.gif-maker-editor .right {
   padding-left: 1rem;
 }
+
+.gif-maker-editor .hidden-image {
+  visibility: hidden;
+  max-width: 100%;
+}
+
+/* ---------------------------*
+*
+* GIF MAKER HEADER
+*
+* -----------------------------*/
 
 .gif-maker-header {
   display: flex;
@@ -94,17 +105,37 @@
   background: rgba(0, 0, 0, 0.8);
 }
 
+/* -----------------------------------
+*
+* GIF MAKER EDITOR SIDEBAR
+*
+* ----------------------------------*/
+.gif-maker-editor-sidebar {
+  padding: 1rem;
+}
+
+
+.gif-maker-editor-sidebar select[name="font-choice"].roboto,
+.gif-maker-editor-sidebar select[name="font-choice"] option[value="roboto"] {
+  font-family: 'Roboto', sans-serif;
+}
+
+.gif-maker-editor-sidebar select[name="font-choice"].antonio,
+.gif-maker-editor-sidebar select[name="font-choice"] option[value="antonio"] {
+  font-family: 'Antonio', sans-serif;
+}
+
 @media screen and (max-width: 700px) {
-  .gif-maker.gif-selected {
+  .gif-maker-editor {
     flex-direction: column;
   }
 
-  .gif-maker.gif-selected .left,
-  .gif-maker.gif-selected .right {
+  .gif-maker-editor .left,
+  .gif-maker-editor .right {
     width: 100%;
   }
 
-  .gif-maker.gif-selected .right {
+  .gif-maker-editor .right {
     padding: 1rem 0 0 0;
   }
 }

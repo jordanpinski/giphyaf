@@ -43,13 +43,14 @@ const GifMaker: React.FC<Props> = () => {
       <div className="upload-methods">
         <div className="item">
           <FilePicker
-            allowedFormats=".jpg, .jpeg, .png, .gif"
-            allowedFormatsText="Allowed Formats: JPG, PNG, GIF"
+            allowedFormats=".jpg, .jpeg, .png"
+            allowedFormatsText="Allowed Formats: JPG, PNG"
             setFile={handleSetFile}
             setFilePreview={setFilePreview}
           />
         </div>
       </div>
+      <p className="note">More formats, including GIF are coming soon!</p>
     </div>
   )
 }

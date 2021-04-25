@@ -7,6 +7,8 @@ interface Props {
   setGifAnimation: any
 }
 
+// TODO: Try implementing https://github.com/jnordberg/gif.js to encode GIF
+
 const GifMakerCanvasGif: React.FC<Props> = ({ filePreview, setGifAnimation }) => {
 
   // Refs
