@@ -6,13 +6,11 @@ With giphyaf you can easily upload GIFs and share them with the world.
 
 ## Issues
 
-HNS domain (giphyaf.hns) will be released Tuesday.
-
-This app uses the Content Record DAC to pull information for all previous uploads. With that said, uploads are tied to the host domain so anything uploaded/created won't available through the app after the HNS domain is setup.
+This app uses the Content Record DAC to pull information for all previous uploads. After uploading/creating a GIF Sometimes the content record isn't updated before the user returns to their home page which shows all of their GIFs. If this happens you'll need to manually refresh the page.
 
 ## Demo
 
-You can view the demo at: https://100cgpabou2f92sq0jborenogqnd0g3hoecnkot4vs5lpdiaco3cqu0.siasky.net/
+You can view the demo at: https://giphyaf.hns.siasky.net/
 
 ## Planned Features
 
