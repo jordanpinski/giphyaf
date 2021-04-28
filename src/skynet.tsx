@@ -3,14 +3,16 @@ import react from 'react';
 import { SkynetClient } from 'skynet-js';
 // @ts-ignore
 import { ContentRecordDAC } from "@skynetlabs/content-record-library";
-//import { FeedDAC } from "feed-dac-library";
+import { FeedDAC } from "feed-dac-library";
 
-const devMode = false;
-const client = devMode ? new SkynetClient('https://siasky.net/') : new SkynetClient();
-const dataDomain = devMode ? 'localhost' : 'giphyaf.hns';
+const DEV_MODE = true;
+const DATA_DOMAIN = "skyfeed-dev.hns";
+const SKYNET_CLIENT = DEV_MODE ? new SkynetClient('https://siasky.net/') : new SkynetClient();
+const SKAPP = DEV_MODE ? "localhost" : "giphyaf.hns"; 
 
 let mySky: any;
 let contentRecordDAC: any;
+let feedDAC: any;
 let userID: string;
 
 /**
@@ -18,23 +20,23 @@ let userID: string;
  * @returns object - An object with the following properties: mySky, skynetClient, loggedIn, userID
  */
 async function initMySky() : Promise<any> {
-  let skynetClient = client;
   let loggedIn = false;
 
   try {
 
     // Initiate MySky
-    mySky = await client.loadMySky(dataDomain, {
-      dev: devMode,
-      debug: true
+    mySky = await SKYNET_CLIENT.loadMySky(SKAPP, {
+      dev: DEV_MODE,
+      debug: DEV_MODE
     });
 
     // Initialize DAC, auto-adding permissions.
     contentRecordDAC = new ContentRecordDAC();
+    feedDAC = new FeedDAC();
 
     // Load dac into MySky
     // @ts-ignore
-    await mySky.loadDacs(contentRecordDAC);
+    await mySky.loadDacs(feedDAC);
   
     // Attempt silent login
     loggedIn = await mySky.checkLogin();
@@ -47,12 +49,10 @@ async function initMySky() : Promise<any> {
     console.log(e);
   }
 
-  console.log({mySky, skynetClient, userID})
-
   return {
     mySky,
     contentRecordDAC,
-    skynetClient,
+    skynetClient: SKYNET_CLIENT,
     loggedIn,
     userID
   }
@@ -66,42 +66,20 @@ type UploadType = {
 
 /**
  * Gets all content record entries for this data domain.
- * @param mySky
+ * @param page
  */
-async function getUserEntries(mySky: any): Promise<any> {
-  const indexFilePath = `crqa.hns/${mySky.hostDomain}/newcontent/index.json`;
+async function getUserEntries(pageNumber: number = 0): Promise<any> {
+  if (!mySky) return;
+
+  //const indexFilePath = `${DATA_DOMAIN}/${SKAPP}/posts/index.json`;
   let entries;
 
   try {
-    console.log('getUserEntries', indexFilePath);
-    const { data } = await mySky.getJSON(indexFilePath);
-    console.log(data);
-    const { pages } = data;
-    entries = await getAllEntries(pages);
-
+    const { data } = await mySky.getJSON(`${DATA_DOMAIN}/${SKAPP}/posts/page_${pageNumber}.json`);
+    entries = data ? data.items : [];
   } catch (error) {
     console.error(error);
   }
-
-  return entries;
-}
-
-/**
- * Gets the data for all pages
- * @param page 
- */
-async function getAllEntries(pages: string[]) {
-  let entries: any[] = [];
-
-  for (const page of pages) {
-    try {
-      const data = await mySky.getJSON(page);
-      console.log({data});
-      entries = [...entries, ...data.data.entries];
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return entries;
 }
@@ -111,36 +89,33 @@ async function getAllEntries(pages: string[]) {
  * @param upload 
  * @returns boolean
  */
-async function upload(upload: UploadType): Promise<any> {
+async function upload(upload: UploadType) {
 
   const { file, title, tags } = upload;
+  const { skylinkUrl } = await uploadImage(file, SKYNET_CLIENT);
 
-  const { skylinkUrl } = await uploadImage(file, client);
-
-  // // Create the post JSON object.
   const json = {
-    image: {
-      ext: file.type,
-      url: skylinkUrl,
+    media: {
+      image: {
+        ext: file.type,
+        url: skylinkUrl
+      }
     },
     title: title,
-    tags: tags,
-  };
+    topics: tags,
+  }
 
   try {
 
-    // Record event in content record DAC
-    const status = await contentRecordDAC.recordNewContent({
-      json,
-      metadata: {'action': 'created'}
-    });
+    // Record in FeedDAC
+    await feedDAC.createPost(json);
 
   } catch (error) {
     console.error('Error uploading JSON', error);
   }
 
   // Artificial timeout so that DAC has enough time to update.
-  return new Promise(resolve => setTimeout(resolve, 4500));
+  return;
 }
 
 /**
@@ -154,12 +129,10 @@ async function uploadImage(file: any, skynetClient: any): Promise<{skylink: stri
 
   try {
     // Upload the image.
-    console.log(`uploading image: ${file}`);
     const { skylink } = await skynetClient.uploadFile(file);
     tempSkylink = skylink;
 
     // Get the image's URL.
-    console.log(`getting image url`);
     const skylinkUrl = await skynetClient.getSkylinkUrl(skylink);
     tempSkylinkUrl = skylinkUrl;
 
@@ -175,7 +148,7 @@ async function uploadImage(file: any, skynetClient: any): Promise<{skylink: stri
 }
 
 function debug(message: string) {
-  if (devMode) {
+  if (DEV_MODE) {
     console.log(message);
   }
 }

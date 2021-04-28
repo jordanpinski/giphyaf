@@ -18,8 +18,6 @@ const GifUploaderPreview: React.FC<Props> = ({
   setLoading
 }) => {
 
-  console.log({file, filePreview})
-
   return (
     <>
       <div className="hero hero--small hero--inline gradient-two fade-up mb-4">

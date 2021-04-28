@@ -24,6 +24,10 @@ form hr {
   margin-bottom: 2rem;
 }
 
+.input-wrapper:last-of-type {
+  margin-bottom: 0;
+}
+
 .input-wrapper label {
   min-width: 50px;
   margin: 0 0 0.7rem 0;

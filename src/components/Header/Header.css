@@ -15,6 +15,19 @@
   height: 100px;
 }
 
+@media screen and (max-width: 575px) {
+  .app-header {
+    height: 120px;
+  }
+
+  .app-header .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+  }
+}
+
 /* ---------------------------
 *
 * ACTIONS
@@ -31,6 +44,12 @@
 
 .app-header .actions a:last-of-type {
   margin-right: 0;
+}
+
+@media screen and (max-width: 575px) {
+  .app-header .actions {
+    justify-content: space-between;
+  }
 }
 
 /* ---------------------------

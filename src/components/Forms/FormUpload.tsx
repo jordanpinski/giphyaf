@@ -24,7 +24,6 @@ const FormUpload: React.FC<Props> = ({
   const history = useHistory();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     setLoading(true);
     const { title, tags } = data;
     const uploadData: UploadType = {
@@ -49,7 +48,7 @@ const FormUpload: React.FC<Props> = ({
           placeholder="title"
           {...register("title", {
             required: true,
-            pattern: /^[a-z0-9]+$/i
+            pattern: /^[a-z\d\-_\s]+$/i
           })}
         />
         {errors.title?.type === 'required' ? <p className="input-error">Title is required.</p> : null}
@@ -72,10 +71,12 @@ const FormUpload: React.FC<Props> = ({
         {errors.tags?.type === 'pattern' && <p className="input-error">Alphanumeric only.</p>}
       </div>
 
-      <Button type="secondary" title="Submit" htmlType="submit" disabled={loading ? true : false}>
-        {/* {loading ? <object className="fade-up" type="image/svg+xml" data={loader} width="20px" height="16px">Loading</object> : 'Submit'} */}
-        Upload To giphyaf
-      </Button>
+      <div className="input-wrapper">
+        <Button type="secondary" title="Submit" htmlType="submit" disabled={loading ? true : false}>
+          {/* {loading ? <object className="fade-up" type="image/svg+xml" data={loader} width="20px" height="16px">Loading</object> : 'Submit'} */}
+          Upload To giphyaf
+        </Button>
+      </div>
 
     </form>
   )

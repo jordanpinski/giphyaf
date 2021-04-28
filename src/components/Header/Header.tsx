@@ -15,7 +15,7 @@ const Header: React.FC<Props> = () => {
         <div className="row">
             
           {/* Logo */}
-          <div className="column column-3">
+          <div className="column column-sm-3">
             <Logo />
           </div>
 
@@ -23,7 +23,7 @@ const Header: React.FC<Props> = () => {
           {/* Navigation */}
 
           {/* Actions */}
-          <div className="column column-9">
+          <div className="column column-sm-9">
             <HeaderActions />
           </div>
 

@@ -1,5 +1,6 @@
 * {
   font-family: 'Spartan', sans-serif;
+  box-sizing: border-box !important;
 }
 
 html {
@@ -91,6 +92,16 @@ a {
   width: calc((100% / 12) * 3);
 }
 
+@media screen and (min-width: 575px) {
+  .column.column-sm-3 {
+    width: calc((100% / 12) * 3) !important;
+  }
+
+  .column.column-sm-9 {
+    width: calc((100% / 12) * 9) !important;
+  }
+}
+
 @media screen and (min-width: 767px) {
   .column.column-md-4 {
     width: calc((100% / 12) * 4) !important;
@@ -130,6 +141,12 @@ a {
 
 .page p a:hover {
   color: rgba(197, 255, 0, 0.9);
+}
+
+@media screen and (max-width: 575px) {
+  .page {
+    margin: calc(120px + 1rem) 0 0 0;
+  }
 }
 
 /* PAGE UPLOAD */
@@ -249,6 +266,7 @@ a {
   align-items: center;
   width: 100%;
   height: 100%;
+  border-radius: 2px;
 }
 
 /* ---------------------------------

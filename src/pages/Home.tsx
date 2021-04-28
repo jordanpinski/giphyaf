@@ -33,13 +33,14 @@ const Home: React.FC<Props> = () => {
     let promiseActive = true; // Needed for cleanup.
     if (!loggedIn) return;
 
-    getUserEntries(mySky).then((data: any) => {
+    getUserEntries().then((data: any) => {
       if (promiseActive) {
         if (!data) {
           console.error('No data to load');
           setLoading(false);
           return;
         };
+        console.log('DATA!!', data);
         setEntries(data);
         setLoading(false);
       }
@@ -96,9 +97,9 @@ const Home: React.FC<Props> = () => {
                           <>
                             <div className="column column-6 column-lg-3 column-md-4" key={index}>
                               <Gif
-                                skylinkUrl={entry.json.image.url}
-                                title={entry.json.title}
-                                tags={entry.json.tags}
+                                skylinkUrl={entry.content.media.image.url}
+                                title={entry.content.title}
+                                tags={entry.content.topics}
                               />
                             </div>
                             {index === entries.length - 1 ? (
