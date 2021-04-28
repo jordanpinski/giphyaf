@@ -5,10 +5,10 @@ import { SkynetClient } from 'skynet-js';
 import { ContentRecordDAC } from "@skynetlabs/content-record-library";
 import { FeedDAC } from "feed-dac-library";
 
-const DEV_MODE = true;
+const DEV_MODE = window.location.hostname === 'localhost';
 const DATA_DOMAIN = "skyfeed-dev.hns";
 const SKYNET_CLIENT = DEV_MODE ? new SkynetClient('https://siasky.net/') : new SkynetClient();
-const SKAPP = DEV_MODE ? "localhost" : "giphyaf.hns"; 
+const SKAPP = window.location.hostname.includes("giphyaf.hns") ? "giphyaf.hns" : window.location.hostname.split(".")[0];
 
 let mySky: any;
 let contentRecordDAC: any;
@@ -27,7 +27,7 @@ async function initMySky() : Promise<any> {
     // Initiate MySky
     mySky = await SKYNET_CLIENT.loadMySky(SKAPP, {
       dev: DEV_MODE,
-      debug: DEV_MODE
+      debug: true
     });
 
     // Initialize DAC, auto-adding permissions.
@@ -35,7 +35,6 @@ async function initMySky() : Promise<any> {
     feedDAC = new FeedDAC();
 
     // Load dac into MySky
-    // @ts-ignore
     await mySky.loadDacs(feedDAC);
   
     // Attempt silent login
@@ -70,9 +69,9 @@ type UploadType = {
  */
 async function getUserEntries(pageNumber: number = 0): Promise<any> {
   if (!mySky) return;
-
+  
   //const indexFilePath = `${DATA_DOMAIN}/${SKAPP}/posts/index.json`;
-  let entries;
+  let entries = [];
 
   try {
     const { data } = await mySky.getJSON(`${DATA_DOMAIN}/${SKAPP}/posts/page_${pageNumber}.json`);

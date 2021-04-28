@@ -22,7 +22,7 @@ const Logo: React.FC<Props> = ({ noLink }) => {
       <Link to="/">
         giphyaf
       </Link> 
-      <span className="version" title={`v${appVersion} - View Changelog`}>v1</span>
+      <a className="version" href="https://github.com/jordanpinski/giphyaf#changelog" target="_blank" title={`v${appVersion} - View Changelog`}>v1</a>
     </div>
   )
 }

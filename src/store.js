@@ -1,7 +1,7 @@
 import { createStore, action } from 'easy-peasy';
 
 export default createStore({
-  appVersion: '1.0.1',
+  appVersion: '1.0.2',
   loggedIn: localStorage.getItem('loggedIn') === 'true' ? true : false,
   setLoggedIn: action((state, payload) => {
     state.loggedIn = payload

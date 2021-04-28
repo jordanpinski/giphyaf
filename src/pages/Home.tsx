@@ -40,7 +40,6 @@ const Home: React.FC<Props> = () => {
           setLoading(false);
           return;
         };
-        console.log('DATA!!', data);
         setEntries(data);
         setLoading(false);
       }
