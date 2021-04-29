@@ -7,7 +7,7 @@ interface Props {
   height: number
 }
 
-const GifMakerCanvasImage: React.FC<Props> = ({ filePreview, width, height }) => {
+const GifCreatorCanvasImage: React.FC<Props> = ({ filePreview, width, height }) => {
 
   // Local state
   const [image, setImage] = useState<any>();
@@ -29,4 +29,4 @@ const GifMakerCanvasImage: React.FC<Props> = ({ filePreview, width, height }) =>
   />
 }
 
-export default GifMakerCanvasImage;
+export default GifCreatorCanvasImage;

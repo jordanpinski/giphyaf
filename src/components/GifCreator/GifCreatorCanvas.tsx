@@ -1,17 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Stage, Layer, Text } from 'react-konva';
-import GifMakerCanvasGif from './GifMakerCanvasGif';
-import GifMakerCanvasImage from './GifMakerCanvasImage';
-import GifMakerCanvasText from './GifMakerCanvasText';
+import GifCreatorCanvasGif from './GifCreatorCanvasGif';
+import GifCreatorCanvasImage from './GifCreatorCanvasImage';
+import GifCreatorCanvasText from './GifCreatorCanvasText';
 
 interface Props {
   file: any
   filePreview: string
   canvasContainerRef: any
   imageRef: any
-  color: string
   text: string
   selectedFont: string
+  color: string
+  borderColor: string
+  borderWidth: number
 }
 
 const GifCanvas: React.FC<Props> = ({
@@ -20,6 +22,8 @@ const GifCanvas: React.FC<Props> = ({
   canvasContainerRef,
   imageRef,
   color,
+  borderColor,
+  borderWidth,
   text,
   selectedFont,
 }) => {
@@ -54,24 +58,26 @@ const GifCanvas: React.FC<Props> = ({
         <Layer>
 
           {file.type === 'image/gif' ? (
-            <GifMakerCanvasGif
+            <GifCreatorCanvasGif
               filePreview={filePreview}
               setGifAnimation={setGifAnimation}
             />
           ) : (
-            <GifMakerCanvasImage
+            <GifCreatorCanvasImage
               filePreview={filePreview}
               width={width}
               height={height}
             />
           )}
 
-          <GifMakerCanvasText
+          <GifCreatorCanvasText
             width={width}
             height={height}
-            color={color}
-            text={text}
             selectedFont={selectedFont}
+            text={text}
+            color={color}
+            borderColor={borderColor}
+            borderWidth={borderWidth}
             transformSelected={transformSelected}
           />
         

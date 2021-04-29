@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStoreActions } from 'easy-peasy';
 import Avatar from '../Avatar';
 import { LazyImage } from "react-lazy-images";
-import { copySolid } from '../../assets/icons';
+import { copySolid, loader } from '../../assets/icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import './Gif.css';
 
@@ -44,12 +44,22 @@ const Gif: React.FC<Props> = ({
 
   return (
     <div className="gif fade-up">
-      <a href="#" onClick={handleOnClick} title={title}>
+      <a href="/" onClick={handleOnClick} title={title}>
         <div className="image">
           <LazyImage
             src={skylinkUrl}
             placeholder={({ imageProps, ref }) => (
-              <img ref={ref} src="/" alt={imageProps.alt} />
+              <div className="loading-overlay-section" ref={ref}>
+                <object
+                  className="fade-up"
+                  type="image/svg+xml"
+                  data={loader}
+                  width="20px"
+                  height="16px"
+                >
+                  Loading
+                </object>
+              </div>
             )}
             actual={({ imageProps }) => <img {...imageProps} />}
           />

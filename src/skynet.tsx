@@ -2,13 +2,13 @@ import react from 'react';
 // @ts-ignore
 import { SkynetClient } from 'skynet-js';
 // @ts-ignore
-import { ContentRecordDAC } from "@skynetlabs/content-record-library";
-import { FeedDAC } from "feed-dac-library";
+import { ContentRecordDAC } from '@skynetlabs/content-record-library';
+import { FeedDAC } from 'feed-dac-library';
 
 const DEV_MODE = window.location.hostname === 'localhost';
-const DATA_DOMAIN = "skyfeed-dev.hns";
+const DATA_DOMAIN = 'skyfeed-dev.hns';
 const SKYNET_CLIENT = DEV_MODE ? new SkynetClient('https://siasky.net/') : new SkynetClient();
-const SKAPP = window.location.hostname.includes("giphyaf.hns") ? "giphyaf.hns" : window.location.hostname.split(".")[0];
+const SKAPP = window.location.hostname.includes('giphyaf.hns') ? 'giphyaf.hns' : window.location.hostname.split(".")[0];
 
 let mySky: any;
 let contentRecordDAC: any;
@@ -88,7 +88,7 @@ async function getUserEntries(pageNumber: number = 0): Promise<any> {
  * @param upload 
  * @returns boolean
  */
-async function upload(upload: UploadType) {
+async function createEntry(upload: UploadType) {
 
   const { file, title, tags } = upload;
   const { skylinkUrl } = await uploadImage(file, SKYNET_CLIENT);
@@ -154,7 +154,7 @@ function debug(message: string) {
 
 export {
   initMySky,
-  upload,
+  createEntry,
   getUserEntries
 }
 

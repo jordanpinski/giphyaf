@@ -34,15 +34,22 @@ form hr {
   font-weight: bold;
 }
 
-.input-wrapper input[type="text"],
+.input-wrapper textarea,
+.input-wrapper input,
 .input-wrapper select {
   width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   min-height: 44px;
   padding: 12px 14px;
   outline: none;
   border: none;
   border-radius: 2px;
   box-sizing: border-box;
+}
+
+.input-wrapper select {
+  cursor: pointer;
 }
 
 .input-wrapper select option {

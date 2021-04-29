@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import GifMaker from '../components/GifMaker';
+import GifCreator from '../components/GifCreator';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -35,7 +35,7 @@ const Upload: React.FC<Props> = () => {
           <div className="row">
             <div className="column column-12">
               {loggedIn ? 
-                <GifMaker />
+                <GifCreator />
               : (
                 <>
                   <div className="hero gradient-two">

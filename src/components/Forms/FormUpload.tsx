@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from '../Button';
 import { useForm } from 'react-hook-form';
-import { upload, UploadType } from '../../skynet';
+import { createEntry, UploadType } from '../../skynet';
 import './Form.css';
 
 interface Props {
@@ -32,7 +32,7 @@ const FormUpload: React.FC<Props> = ({
       tags: tags.split(',').map((tag: string) => tag.trim())
     }
 
-    await upload(uploadData);
+    await createEntry(uploadData);
     setLoading(false);
     history.push('/');
   }

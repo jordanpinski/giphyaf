@@ -5,21 +5,30 @@ import { transform } from 'typescript';
 interface Props {
   width: number
   height: number
-  color: string
   text: string
   selectedFont: string
+  color: string
+  borderColor: string
+  borderWidth: number
   transformSelected: boolean
 }
 
-const GifMakerCanvasText: React.FC<Props> = ({ color, text, selectedFont, width, height, transformSelected }) => {
+const GifCreatorCanvasText: React.FC<Props> = ({
+  text,
+  selectedFont,
+  color,
+  borderColor,
+  borderWidth,
+  width,
+  height,
+  transformSelected
+}) => {
 
   // Refs
   const textRef = useRef<any>();
   const transformerRef = useRef<any>();
 
   useEffect(() => {
-
-    console.log(transformSelected)
 
     if (transformSelected && transformerRef && transformerRef.current) {
       transformerRef.current.nodes([textRef.current]);
@@ -37,21 +46,27 @@ const GifMakerCanvasText: React.FC<Props> = ({ color, text, selectedFont, width,
         text={text}
         x={width/2}
         y={height/2}
-        fontSize={40}
-        fontFamily={`${selectedFont}`}
+        fontSize={60}
+        fontFamily={`${selectedFont.split('-').map((font) => {
+          return font[0].toUpperCase() + font.slice(1, font.length);
+        }).join(' ')}`}
         fontStyle="bold"
         fill={color}
+        stroke={borderColor}
+        strokeWidth={borderWidth}
+        strokeEnabled={borderWidth > 0 ? true : false}
         draggable={true}
       />
       <Transformer
         ref={transformerRef}
         resizeEnabled={true}
         rotateEnabled={false}
-        anchorSize={7}
-        keepRatio={true}
+        padding={10}
+        anchorSize={10}
+        keepRatio={false}
       />
     </>
   )
 }
 
-export default GifMakerCanvasText;
+export default GifCreatorCanvasText;

@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 // @ts-ignore
 import { NotificationManager } from 'react-notifications';
 import FilePicker from '../Forms/FilePicker';
-import GifMakerEditor from './GifMakerEditor';
-import './GifMaker.css';
+import GifCreatorEditor from './GifCreatorEditor';
+import './GifCreator.css';
 
 interface Props {
 
 }
 
-const GifMaker: React.FC<Props> = () => {
+const GifCreator: React.FC<Props> = () => {
 
   const [file, setFile] = useState<any>();
   const [filePreview, setFilePreview] = useState<any>();
@@ -35,9 +35,9 @@ const GifMaker: React.FC<Props> = () => {
   }
 
   return file ? (
-    <GifMakerEditor file={file} filePreview={filePreview} handleCancel={handleCancel} />
+    <GifCreatorEditor file={file} filePreview={filePreview} handleCancel={handleCancel} />
   ) : (
-    <div className="gif-maker gradient-three">
+    <div className="gif-creator gradient-three">
       <h1>Create A GIF</h1>
       <p>Choose one of the options below.</p>
       <div className="upload-methods">
@@ -55,4 +55,4 @@ const GifMaker: React.FC<Props> = () => {
   )
 }
 
-export default GifMaker;
+export default GifCreator;

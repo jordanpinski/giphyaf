@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import GifMakerCanvas from './GifMakerCanvas';
-import GifMakerEditorSidebar from './GifMakerEditorSidebar';
+import GifCreatorCanvas from './GifCreatorCanvas';
+import GifCreatorEditorSidebar from './GifCreatorEditorSidebar';
 import GifUploaderPreview from '../GifUploader/GifUploaderPreview';
 import { arrowLeftSolid, loader } from '../../assets/icons';
 import { Button } from '../Button';
@@ -16,8 +16,10 @@ const GifMakerEditor: React.FC<Props> = ({ file, filePreview, handleCancel }) =>
 
   // Local state
   const [text, setText] = useState<string>('');
-  const [selectedFont, setSelectedFont] = useState<string>('spartan');
-  const [color, setColor] = useState<string>('#ffffff');
+  const [selectedFont, setSelectedFont] = useState<string>('alfa-slab-one');
+  const [color, setColor] = useState<string>('#fff');
+  const [borderColor, setBorderColor] = useState<string>('#000');
+  const [borderWidth, setBorderWidth] = useState<number>(1.5);
   const [loading, setLoading] = useState<boolean>(false);
   const [gif, setGif] = useState<any>();
   const [blobGif, setBlobGif] = useState<any>();
@@ -47,28 +49,34 @@ const GifMakerEditor: React.FC<Props> = ({ file, filePreview, handleCancel }) =>
 
           <p className="notification">Please note - this editor is a proof of concept &amp; will be improved.</p>
 
-          <div className="gif-maker-editor">
+          <div className="gif-creator-editor">
 
             <div ref={canvasContainerRef} className="left image">
-              <GifMakerCanvas
+              <GifCreatorCanvas
                 file={file}
                 filePreview={filePreview}
                 canvasContainerRef={canvasContainerRef}
                 imageRef={imageRef}
-                color={color}
                 text={text}
                 selectedFont={selectedFont}
+                color={color}
+                borderColor={borderColor}
+                borderWidth={borderWidth}
               />
               <img ref={imageRef} className="hidden-image" src={filePreview} />
             </div>
 
             <div className="right editor-sidebar">
-              <GifMakerEditorSidebar
+              <GifCreatorEditorSidebar
                 setText={setText}
                 setSelectedFont={setSelectedFont}
                 selectedFont={selectedFont}
                 color={color}
                 setColor={setColor}
+                borderColor={borderColor}
+                setBorderColor={setBorderColor}
+                borderWidth={borderWidth}
+                setBorderWidth={setBorderWidth}
               />
               <Button htmlType="button" type="secondary" onClick={handleNext}>Next</Button>
             </div>

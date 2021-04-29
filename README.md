@@ -16,10 +16,15 @@ You can view the demo at: https://giphyaf.hns.siasky.net/
 
 ## Changelog
 
+### v1.0.3
+- GIF creator improvements
+- - More options
+- - Improved interface
+
 ### v1.0.2
 - Updated skynet-js (4.0.3-beta).
 - Fixed bug with skapp name when fetching data.
-- Removed unneccesary console logs.
+- Removed unnecessary console logs.
 
 ### v1.0.1
 - Added hns domain giphyaf.hns

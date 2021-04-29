@@ -3,7 +3,7 @@
 * GifUploader.css
 *
 * ---------------------------*/
-.gif-maker {
+.gif-creator {
   position: relative;
   padding: 2rem;
   border-radius: 2px;
@@ -11,19 +11,19 @@
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
 }
 
-.gif-maker .upload-methods {
+.gif-creator .upload-methods {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.gif-maker .upload-methods .item {
+.gif-creator .upload-methods .item {
   width: 200px;
   height: 150px;
 }
 
-.gif-maker-editor {
+.gif-creator-editor {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -33,12 +33,12 @@
   box-shadow: none;
 }
 
-.gif-maker-editor .left,
-.gif-maker-editor .right {
+.gif-creator-editor .left,
+.gif-creator-editor .right {
   width: 50%;
 }
 
-.gif-maker-editor .left .selected-file {
+.gif-creator-editor .left .selected-file {
   position: relative;
   display: flex;
   align-items: center;
@@ -56,17 +56,21 @@
   border-radius: 2px;
 }
 
-.gif-maker-editor .left .selected-file * {
+.gif-creator-editor .left .selected-file * {
   max-width: 100%;
   width: 100%;
   display: block;
 }
 
-.gif-maker-editor .right {
+.gif-creator-editor .right {
   padding-left: 1rem;
 }
 
-.gif-maker-editor .hidden-image {
+.gif-creator-editor canvas {
+  border-radius: 2px;
+}
+
+.gif-creator-editor .hidden-image {
   position: absolute;
   visibility: hidden;
   pointer-events: none;
@@ -79,22 +83,22 @@
 *
 * -----------------------------*/
 
-.gif-maker-header {
+.gif-creator-header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
-.gif-maker-header span {
+.gif-creator-header span {
   cursor: pointer;
 }
 
-.gif-maker-header span object {
+.gif-creator-header span object {
   margin-right: 1rem;
   pointer-events: none;
 }
 
-.gif-maker-loading-overlay {
+.gif-creator-loading-overlay {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,32 +116,52 @@
 * GIF MAKER EDITOR SIDEBAR
 *
 * ----------------------------------*/
-.gif-maker-editor-sidebar {
+.gif-creator-editor-sidebar {
   padding: 1rem;
+  border-radius: 2px;
 }
 
-
-.gif-maker-editor-sidebar select[name="font-choice"].roboto,
-.gif-maker-editor-sidebar select[name="font-choice"] option[value="roboto"] {
+/* .gif-creator-editor-sidebar select[name="font-choice"].roboto,
+.gif-creator-editor-sidebar select[name="font-choice"] option[value="roboto"] {
   font-family: 'Roboto', sans-serif;
 }
 
-.gif-maker-editor-sidebar select[name="font-choice"].antonio,
-.gif-maker-editor-sidebar select[name="font-choice"] option[value="antonio"] {
+.gif-creator-editor-sidebar select[name="font-choice"].antonio,
+.gif-creator-editor-sidebar select[name="font-choice"] option[value="antonio"] {
   font-family: 'Antonio', sans-serif;
+} */
+
+.gif-creator-editor-sidebar select[name="font-choice"].alfa-slab-one,
+.gif-creator-editor-sidebar select[name="font-choice"] option[value="alfa-slab-one"] {
+  font-family: 'Alfa Slab One', sans-serif;
+}
+
+.gif-creator-editor-sidebar select[name="font-choice"].anton,
+.gif-creator-editor-sidebar select[name="font-choice"] option[value="anton"] {
+  font-family: 'Anton', sans-serif;
+}
+
+.gif-creator-editor-sidebar select[name="font-choice"].bungee,
+.gif-creator-editor-sidebar select[name="font-choice"] option[value="bungee"] {
+  font-family: 'Bungee', cursive;
+}
+
+.gif-creator-editor-sidebar select[name="font-choice"].coda-caption,
+.gif-creator-editor-sidebar select[name="font-choice"] option[value="coda-caption"] {
+  font-family: 'Coda Caption', sans-serif;
 }
 
 @media screen and (max-width: 700px) {
-  .gif-maker-editor {
+  .gif-creator-editor {
     flex-direction: column;
   }
 
-  .gif-maker-editor .left,
-  .gif-maker-editor .right {
+  .gif-creator-editor .left,
+  .gif-creator-editor .right {
     width: 100%;
   }
 
-  .gif-maker-editor .right {
+  .gif-creator-editor .right {
     padding: 1rem 0 0 0;
   }
 }
