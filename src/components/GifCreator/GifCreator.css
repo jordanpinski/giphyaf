@@ -74,7 +74,6 @@
   position: absolute;
   visibility: hidden;
   pointer-events: none;
-  max-width: 100%;
 }
 
 /* ---------------------------*

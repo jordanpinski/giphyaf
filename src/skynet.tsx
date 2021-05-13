@@ -6,7 +6,7 @@ import { ContentRecordDAC } from '@skynetlabs/content-record-library';
 import { FeedDAC } from 'feed-dac-library';
 
 const DEV_MODE = window.location.hostname === 'localhost';
-const DATA_DOMAIN = 'skyfeed-dev.hns';
+const DATA_DOMAIN = 'feed-dac.hns';
 const SKYNET_CLIENT = DEV_MODE ? new SkynetClient('https://siasky.net/') : new SkynetClient();
 const SKAPP = window.location.hostname.includes('giphyaf.hns') ? 'giphyaf.hns' : window.location.hostname.split(".")[0];
 

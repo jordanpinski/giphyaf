@@ -79,7 +79,7 @@ const GifMakerEditorSidebar: React.FC<Props> = ({
               <option value="press-start-2p">Press Start 2P</option>
               <option value="sigmar-one">Sigmar One</option>
               <option value="source-code-pro">Source Code Pro</option>
-              
+  
             </select>
           </div>
 

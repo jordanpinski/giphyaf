@@ -18,8 +18,8 @@ You can view the demo at: https://giphyaf.hns.siasky.net/
 
 ### v1.0.3
 - GIF creator improvements
-- - More options
-- - Improved interface
+  - More options
+  - Improved interface
 
 ### v1.0.2
 - Updated skynet-js (4.0.3-beta).
