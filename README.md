@@ -17,7 +17,7 @@ You can view the demo at: https://giphyaf.hns.siasky.net/
 ## Changelog
 
 ### v1.0.3
-- Updated feed-dac library.
+- Updated feed-dac library (0.2.2).
 - GIF creator improvements
   - More options
   - Improved interface
