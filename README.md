@@ -10,13 +10,14 @@ You can view the demo at: https://giphyaf.hns.siasky.net/
 
 ## Planned Features
 
-- More options/formats & a better UX when creating GIFs.\
+- More options/formats & a better UX when creating GIFs.
 - Adding a feed of all GIFs created by every user.
 - Adding search
 
 ## Changelog
 
 ### v1.0.3
+- Updated feed-dac library.
 - GIF creator improvements
   - More options
   - Improved interface
