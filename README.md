@@ -16,8 +16,13 @@ You can view the demo at: https://giphyaf.hns.siasky.net/
 
 ## Changelog
 
+### v1.0.4
+- Began adding UserProfileDAC (0.1.10-beta).
+- Fixed bug regarding the images aspect ratio when creating a GIF.
+
 ### v1.0.3
 - Updated feed-dac library (0.2.2).
+- Updated skynet-js (4.0.6-beta).
 - GIF creator improvements
   - More options
   - Improved interface

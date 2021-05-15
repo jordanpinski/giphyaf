@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Stage, Layer, Text } from 'react-konva';
-import { aspectRatio, gcd } from '../../utils';
+import { aspectRatio, getAspectRatio } from '../../utils';
 import GifCreatorCanvasGif from './GifCreatorCanvasGif';
 import GifCreatorCanvasImage from './GifCreatorCanvasImage';
 import GifCreatorCanvasText from './GifCreatorCanvasText';
@@ -41,9 +41,14 @@ const GifCanvas: React.FC<Props> = ({
   useEffect(() => {
     const canvasContainer = canvasContainerRef.current;
     const image = imageRef.current;
-    const imageAspectRatio = aspectRatio(image.offsetWidth, image.offsetHeight);
-    setWidth(canvasContainer.offsetWidth);
-    setHeight(image.offsetHeight * (imageAspectRatio.x < imageAspectRatio.y ? imageAspectRatio.x : imageAspectRatio.y));
+
+    const aspectRatio = getAspectRatio(canvasContainer, image);
+
+    const newWidth = image.width / aspectRatio;
+    const newHeight = image.height / aspectRatio;
+    
+    setWidth(newWidth);
+    setHeight(newHeight);
   }, [canvasContainerRef, imageRef])
 
   const handleMouseEnter = () => {

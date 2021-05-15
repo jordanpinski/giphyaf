@@ -1,9 +1,8 @@
 import react from 'react';
 // @ts-ignore
 import { SkynetClient } from 'skynet-js';
-// @ts-ignore
-import { ContentRecordDAC } from '@skynetlabs/content-record-library';
 import { FeedDAC } from 'feed-dac-library';
+import { UserProfileDAC } from "@skynethub/userprofile-library";
 
 const DEV_MODE = window.location.hostname === 'localhost';
 const DATA_DOMAIN = 'feed-dac.hns';
@@ -11,15 +10,18 @@ const SKYNET_CLIENT = DEV_MODE ? new SkynetClient('https://siasky.net/') : new S
 const SKAPP = window.location.hostname.includes('giphyaf.hns') ? 'giphyaf.hns' : window.location.hostname.split(".")[0];
 
 let mySky: any;
-let contentRecordDAC: any;
 let feedDAC: any;
+let userProfileDAC: any;
 let userID: string;
+let userProfile: any = null;
 
 /**
  * Initializes MySky
  * @returns object - An object with the following properties: mySky, skynetClient, loggedIn, userID
  */
 async function initMySky() : Promise<any> {
+  console.log('INITIALIZING SKYNET!');
+
   let loggedIn = false;
 
   try {
@@ -30,18 +32,20 @@ async function initMySky() : Promise<any> {
       debug: true
     });
 
-    // Initialize DAC, auto-adding permissions.
-    contentRecordDAC = new ContentRecordDAC();
+    // Initialize DACs, auto-adding permissions.
     feedDAC = new FeedDAC();
+    userProfileDAC = new UserProfileDAC();
 
     // Load dac into MySky
-    await mySky.loadDacs(feedDAC);
+    await mySky.loadDacs(feedDAC, userProfileDAC);
   
     // Attempt silent login
     loggedIn = await mySky.checkLogin();
 
     if (loggedIn) {
       userID = await mySky.userID();
+      //console.log(mySky.dacs)
+      //userProfile = await mySky.getProfile(userID);
     }
 
   } catch (e) {
@@ -50,10 +54,10 @@ async function initMySky() : Promise<any> {
 
   return {
     mySky,
-    contentRecordDAC,
     skynetClient: SKYNET_CLIENT,
     loggedIn,
-    userID
+    userID,
+    userProfile
   }
 }
 
@@ -84,7 +88,7 @@ async function getUserEntries(pageNumber: number = 0): Promise<any> {
 }
 
 /**
- * Uploads a GIF and records a new content record.
+ * Uploads a GIF and records a new Feed DAC record.
  * @param upload 
  * @returns boolean
  */
@@ -106,14 +110,12 @@ async function createEntry(upload: UploadType) {
 
   try {
 
-    // Record in FeedDAC
     await feedDAC.createPost(json);
 
   } catch (error) {
     console.error('Error uploading JSON', error);
   }
 
-  // Artificial timeout so that DAC has enough time to update.
   return;
 }
 

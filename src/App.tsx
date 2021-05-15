@@ -20,24 +20,22 @@ const App = () => {
 
   // Global state
   const setMySky = useStoreActions((action: any) => action.setMySky);
-  const setContentRecordDAC = useStoreActions((action: any) => action.setContentRecordDAC);
   const setSkynetClient = useStoreActions((action: any) => action.setSkynetClient);
   const setLoggedIn = useStoreActions((action: any) => action.setLoggedIn);
   const setUserID = useStoreActions((action: any) => action.setUserID);
-  const setUserFilePath = useStoreActions((action: any) => action.setUserFilePath)
+  const setUserProfile = useStoreActions((action: any) => action.setUserProfile);
   const globalLoading = useStoreState((state: any) => state.globalLoading);
   const setGlobalLoading = useStoreActions((action: any) => action.setGlobalLoading);
 
   useEffect(() => {
     initMySky().then((data) => {
-      const { mySky, contentRecordDAC, skynetClient, loggedIn, userID } = data;
+      const { mySky, skynetClient, loggedIn, userID, userProfile } = data;
 
       setMySky(mySky);
-      setContentRecordDAC(contentRecordDAC);
       setSkynetClient(skynetClient);
       setLoggedIn(loggedIn);
       setUserID(userID);
-      setUserFilePath(`${mySky.hostDomain}/`);
+      //setUserProfile(userProfile);
       setGlobalLoading(false);
 
     }).catch((error) => {
