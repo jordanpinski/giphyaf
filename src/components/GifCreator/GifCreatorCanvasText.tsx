@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Text, Transformer } from 'react-konva';
-import { transform } from 'typescript';
+// import { transform } from 'typescript';
 
 interface Props {
   width: number

@@ -1,7 +1,7 @@
-import { createStore, action } from 'easy-peasy';
+import { createStore, action, thunk } from 'easy-peasy';
 
 export default createStore({
-  appVersion: '1.0.4',
+  appVersion: '1.0.5',
   loggedIn: localStorage.getItem('loggedIn') === 'true' ? true : false,
   setLoggedIn: action((state, payload) => {
     state.loggedIn = payload
@@ -11,6 +11,19 @@ export default createStore({
     } else {
       localStorage.setItem('loggedIn', 'false');
     }
+  }),
+  loggedInThunk: thunk(async (actions, payload) => {
+
+    console.log('testing!');
+    // const status = await state.mySky.requestLoginAccess();
+    // actions.setLoggedIn(status);
+
+    // if (status) {
+    //   actions.setGlobalLoading(true);
+    //   actions.setUserID(await mySky.userID());
+    //   // NotificationManager.success('You\'ve successfully logged in', 'Logged In', 2500);
+    // }
+
   }),
   globalLoading: true,
   setGlobalLoading: action((state, payload) => { state.globalLoading = payload }),

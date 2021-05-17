@@ -7,7 +7,7 @@ interface Props {
 
 }
 
-const GifPage: React.FC<Props> = ({}) => {
+const GifPage: React.FC<Props> = () => {
   return (
     <>
       <Header />

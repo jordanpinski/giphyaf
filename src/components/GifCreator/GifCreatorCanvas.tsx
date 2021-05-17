@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Stage, Layer, Text } from 'react-konva';
-import { aspectRatio, getAspectRatio } from '../../utils';
+import { Stage, Layer } from 'react-konva';
+import { getAspectRatio } from '../../utils';
 import GifCreatorCanvasGif from './GifCreatorCanvasGif';
 import GifCreatorCanvasImage from './GifCreatorCanvasImage';
 import GifCreatorCanvasText from './GifCreatorCanvasText';

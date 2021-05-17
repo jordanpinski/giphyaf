@@ -18,7 +18,7 @@ const FormUpload: React.FC<Props> = ({
 }) => {
 
   // React Hook Form
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   // React router
   const history = useHistory();
@@ -64,7 +64,7 @@ const FormUpload: React.FC<Props> = ({
           placeholder="tag 1, tag 2, tag 3"
           {...register("tags", {
             required: true,
-            pattern: /^(?=.*[A-Z0-9])[\w.,!"'\/$ ]+$/i
+            pattern: /^(?=.*[A-Z0-9])[\w.,!"'$ ]+$/i
           })}
         />
         {errors.tags?.type === 'required' && <p className="input-error">At least 1 tag is required.</p>}

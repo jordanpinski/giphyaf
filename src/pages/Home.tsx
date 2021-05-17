@@ -130,7 +130,7 @@ const Home: React.FC<Props> = () => {
                   <h1>A Decentralized Home For Your GIFS</h1>
                   <p>giphyaf is a decentralized home to create, upload, and share your GIFs with the world.</p>
                   <div className="buttons">
-                    <a href="#" className="button button--secondary" onClick={handleLogin} title="Login To MySky">Login To MySky</a>
+                    <a href="/" className="button button--secondary" onClick={handleLogin} title="Login To MySky">Login To MySky</a>
                   </div>
                 </div>
               </div>

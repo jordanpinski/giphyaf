@@ -9,7 +9,7 @@ interface Props {
 
 }
 
-const GifUploader: React.FC<Props> = ({}) => {
+const GifUploader: React.FC<Props> = () => {
 
   // Local state
   const [loading, setLoading] = useState<boolean>(false);

@@ -31,7 +31,7 @@ const GifUploaderPreview: React.FC<Props> = ({
         {loading ? <div className="gif-uploader-loading-overlay"><object className="fade-up" type="image/svg+xml" data={loader} width="80px">Loading</object></div> : null }
         <div className="left">
           <div className="selected-file">
-            <img src={filePreview} />
+            <img src={filePreview} alt="" />
           </div>
         </div>
 

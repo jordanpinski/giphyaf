@@ -61,7 +61,7 @@ const Gif: React.FC<Props> = ({
                 </object>
               </div>
             )}
-            actual={({ imageProps }) => <img {...imageProps} />}
+            actual={({ imageProps }) => <img {...imageProps} alt="" />}
           />
         </div>
       </a>

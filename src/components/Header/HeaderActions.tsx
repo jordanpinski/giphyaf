@@ -15,6 +15,7 @@ const HeaderActions: React.FC<Props> = () => {
   
   const mySky = useStoreState((state: any) => state.mySky);
   const loggedIn = useStoreState((state: any) => state.loggedIn);
+  // const loggedInThunk = useStoreActions((actions: any) => actions.loggedInThunk);
   const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
   const setUserID = useStoreActions((actions: any) => actions.setUserID);
   const setGlobalLoading = useStoreActions((actions: any) => actions.setGlobalLoading);

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import GifCreatorCanvas from './GifCreatorCanvas';
 import GifCreatorEditorSidebar from './GifCreatorEditorSidebar';
 import GifUploaderPreview from '../GifUploader/GifUploaderPreview';
-import { arrowLeftSolid, loader } from '../../assets/icons';
+import { arrowLeftSolid } from '../../assets/icons';
 import { Button } from '../Button';
 import 'gifler';
 
@@ -63,7 +63,7 @@ const GifMakerEditor: React.FC<Props> = ({ file, filePreview, handleCancel }) =>
                 borderColor={borderColor}
                 borderWidth={borderWidth}
               />
-              <img ref={imageRef} className="hidden-image" src={filePreview} />
+              <img ref={imageRef} className="hidden-image" src={filePreview} alt="" />
             </div>
 
             <div className="right editor-sidebar">

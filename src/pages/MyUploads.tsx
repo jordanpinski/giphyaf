@@ -3,7 +3,7 @@ import { useStoreState } from 'easy-peasy';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { loader } from '../assets/icons';
-import Gif from '../components/Gif';
+// import Gif from '../components/Gif';
 
 interface Props {
 
@@ -13,7 +13,7 @@ const MyUploads: React.FC<Props> = () => {
 
   // Local state
   const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<any>([]);
+  // const [data, setData] = useState<any>([]);
 
   // Global state
   const mySky = useStoreState((state: any) => state.mySky);
@@ -24,7 +24,7 @@ const MyUploads: React.FC<Props> = () => {
     if (!mySky) return;
     const filepath = `${mySky.hostDomain}/posts/data.json`;
     mySky.getJSON(filepath).then((data: any) => {
-      setData(data.data);
+      // setData(data.data);
       setLoading(false);
       console.log(data);
     });

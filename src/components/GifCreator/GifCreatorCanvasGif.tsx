@@ -34,7 +34,7 @@ const GifMakerCanvasGif: React.FC<Props> = ({ filePreview, setGifAnimation }) =>
       }
     })
     return () => animation.stop();
-  }, [filePreview, canvas]);
+  }, [filePreview, canvas, setGifAnimation]);
 
   return <Image image={canvas} ref={imageRef} />
 }

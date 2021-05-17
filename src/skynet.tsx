@@ -1,8 +1,6 @@
-import react from 'react';
-// @ts-ignore
 import { SkynetClient } from 'skynet-js';
 import { FeedDAC } from 'feed-dac-library';
-import { UserProfileDAC } from "@skynethub/userprofile-library";
+//import { UserProfileDAC } from "@skynethub/userprofile-library";
 
 const DEV_MODE = window.location.hostname === 'localhost';
 const DATA_DOMAIN = 'feed-dac.hns';
@@ -34,7 +32,7 @@ async function initMySky() : Promise<any> {
 
     // Initialize DACs, auto-adding permissions.
     feedDAC = new FeedDAC();
-    userProfileDAC = new UserProfileDAC();
+    //userProfileDAC = new UserProfileDAC();
 
     // Load dac into MySky
     await mySky.loadDacs(feedDAC, userProfileDAC);
@@ -148,11 +146,11 @@ async function uploadImage(file: any, skynetClient: any): Promise<{skylink: stri
 
 }
 
-function debug(message: string) {
-  if (DEV_MODE) {
-    console.log(message);
-  }
-}
+// function debug(message: string) {
+//   if (DEV_MODE) {
+//     console.log(message);
+//   }
+// }
 
 export {
   initMySky,
