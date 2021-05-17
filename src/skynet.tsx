@@ -1,6 +1,7 @@
+// TODO: refactor this
 import { SkynetClient } from 'skynet-js';
 import { FeedDAC } from 'feed-dac-library';
-//import { UserProfileDAC } from "@skynethub/userprofile-library";
+import { UserProfileDAC } from "@skynethub/userprofile-library";
 
 const DEV_MODE = window.location.hostname === 'localhost';
 const DATA_DOMAIN = 'feed-dac.hns';
@@ -15,24 +16,41 @@ let userProfile: any = null;
 
 /**
  * Initializes MySky
- * @returns object - An object with the following properties: mySky, skynetClient, loggedIn, userID
+ * @returns object - An object with the following properties: mySky, loggedIn, userID, userProfile
  */
-async function initMySky() : Promise<any> {
-  console.log('INITIALIZING SKYNET!');
+async function initMySky(mySkyInstance: any) : Promise<any> {
 
   let loggedIn = false;
+
+  // Check if MySky was already initialized.
+  if (mySkyInstance) {
+
+    loggedIn = await mySkyInstance.checkLogin();
+    
+    if (loggedIn) {
+      userID  = await mySkyInstance.userID();
+      //userProfile = await mySkyInstance.getProfile(userID);
+    }
+
+    return {
+      mySky: mySkyInstance,
+      loggedIn,
+      userID,
+      userProfile
+    }
+  }
 
   try {
 
     // Initiate MySky
     mySky = await SKYNET_CLIENT.loadMySky(SKAPP, {
       dev: DEV_MODE,
-      debug: true
+      debug: false
     });
 
     // Initialize DACs, auto-adding permissions.
     feedDAC = new FeedDAC();
-    //userProfileDAC = new UserProfileDAC();
+    userProfileDAC = new UserProfileDAC();
 
     // Load dac into MySky
     await mySky.loadDacs(feedDAC, userProfileDAC);
@@ -42,9 +60,10 @@ async function initMySky() : Promise<any> {
 
     if (loggedIn) {
       userID = await mySky.userID();
-      //console.log(mySky.dacs)
       //userProfile = await mySky.getProfile(userID);
     }
+
+    console.log(mySky);
 
   } catch (e) {
     console.log(e);
@@ -52,7 +71,6 @@ async function initMySky() : Promise<any> {
 
   return {
     mySky,
-    skynetClient: SKYNET_CLIENT,
     loggedIn,
     userID,
     userProfile
@@ -63,6 +81,30 @@ type UploadType = {
   file: any,
   title: string,
   tags: string[]
+}
+
+async function getMySkyProps(mySkyInstance: any) {
+  let loggedIn = false;
+  let userID = 0;
+  let userProfile = null;
+
+  try {
+    loggedIn = await mySkyInstance.checkLogin();
+
+    if (loggedIn) {
+      userID = await mySkyInstance.userID();
+      userProfile = await mySkyInstance.getProfile();
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  return {
+    loggedIn,
+    userID,
+    userProfile
+  }
 }
 
 /**
@@ -93,7 +135,7 @@ async function getUserEntries(pageNumber: number = 0): Promise<any> {
 async function createEntry(upload: UploadType) {
 
   const { file, title, tags } = upload;
-  const { skylinkUrl } = await uploadImage(file, SKYNET_CLIENT);
+  const { skylinkUrl } = await uploadImage(file);
 
   const json = {
     media: {
@@ -121,18 +163,18 @@ async function createEntry(upload: UploadType) {
  * Uploads an image and returns the skylink & skylinkUrl.
  * @param file 
  */
-async function uploadImage(file: any, skynetClient: any): Promise<{skylink: string, skylinkUrl: string}> {
+async function uploadImage(file: any): Promise<{skylink: string, skylinkUrl: string}> {
 
   let tempSkylink = '';
   let tempSkylinkUrl = '';
 
   try {
     // Upload the image.
-    const { skylink } = await skynetClient.uploadFile(file);
+    const { skylink } = await SKYNET_CLIENT.uploadFile(file);
     tempSkylink = skylink;
 
     // Get the image's URL.
-    const skylinkUrl = await skynetClient.getSkylinkUrl(skylink);
+    const skylinkUrl = await SKYNET_CLIENT.getSkylinkUrl(skylink);
     tempSkylinkUrl = skylinkUrl;
 
   } catch (error) {

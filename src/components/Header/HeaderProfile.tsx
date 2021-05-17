@@ -17,6 +17,7 @@ const HeaderProfile: React.FC<Props> = () => {
 
   // Global state
   const mySky = useStoreState((state: any) => state.mySky);
+  const setMySky = useStoreActions((actions: any) => actions.setMySky);
   const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
   const setUserID = useStoreActions((actions: any) => actions.setUserID);
   const setGlobalLoading = useStoreActions((actions: any) => actions.setGlobalLoading);
@@ -30,6 +31,9 @@ const HeaderProfile: React.FC<Props> = () => {
 
   const logOut = async (event: any) => {
     event.preventDefault();
+
+    console.log('mySky', mySky)
+
     try {
       await mySky.logout();
       setUserID('');

@@ -19,29 +19,26 @@ import Logo from './components/Logo';
 const App = () => {
 
   // Global state
+  const mySkyInstance = useStoreState((state: any) => state.mySky);
   const setMySky = useStoreActions((action: any) => action.setMySky);
-  const setSkynetClient = useStoreActions((action: any) => action.setSkynetClient);
   const setLoggedIn = useStoreActions((action: any) => action.setLoggedIn);
   const setUserID = useStoreActions((action: any) => action.setUserID);
-  // const setUserProfile = useStoreActions((action: any) => action.setUserProfile);
+  const setUserProfile = useStoreActions((action: any) => action.setUserProfile);
   const globalLoading = useStoreState((state: any) => state.globalLoading);
   const setGlobalLoading = useStoreActions((action: any) => action.setGlobalLoading);
 
   useEffect(() => {
-    initMySky().then((data) => {
-      // const { mySky, skynetClient, loggedIn, userID, userProfile } = data;
-      const { mySky, skynetClient, loggedIn, userID } = data;
-
+    initMySky(mySkyInstance).then((data) => {
+      const { mySky, loggedIn, userID, userProfile } = data;
       setMySky(mySky);
-      setSkynetClient(skynetClient);
       setLoggedIn(loggedIn);
       setUserID(userID);
-      //setUserProfile(userProfile);
+      setUserProfile(userProfile);
       setGlobalLoading(false);
 
     }).catch((error) => {
       console.log(error);
-    })
+    });
   });
 
   return globalLoading ? (

@@ -16,6 +16,9 @@ You can view the demo at: https://giphyaf.hns.siasky.net/
 
 ## Changelog
 
+### v1.0.5
+- Fixed bug where DACs were being loaded multiple times.
+
 ### v1.0.4
 - Began adding UserProfileDAC (0.1.10-beta).
 - Fixed bug regarding the images aspect ratio when creating a GIF.

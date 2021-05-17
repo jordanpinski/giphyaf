@@ -52,11 +52,13 @@ const Home: React.FC<Props> = () => {
 
   }, [loggedIn, mySky])
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: any) => {
+    event?.preventDefault();
     if (!mySky) return;
 
     try {
       const status = await mySky.requestLoginAccess();
+
       setLoggedIn(status);
   
       if (status) {
