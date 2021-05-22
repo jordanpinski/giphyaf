@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import React, { useState, useContext } from 'react';
+import { useStoreActions } from 'easy-peasy';
+import { SkynetContext } from '../../state/SkynetContext';
 import { Link, useHistory } from 'react-router-dom';
 // @ts-ignore
 import { NotificationManager } from 'react-notifications';
@@ -16,10 +17,9 @@ const HeaderProfile: React.FC<Props> = () => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
   // Global state
-  const mySky = useStoreState((state: any) => state.mySky);
-  const setMySky = useStoreActions((actions: any) => actions.setMySky);
-  const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
-  const setUserID = useStoreActions((actions: any) => actions.setUserID);
+  // @ts-ignore
+  const { mySky } = useContext(SkynetContext);
+  const { logout } = useStoreActions((actions: any) => actions.mySky);
   const setGlobalLoading = useStoreActions((actions: any) => actions.setGlobalLoading);
 
   // Other hooks
@@ -32,13 +32,10 @@ const HeaderProfile: React.FC<Props> = () => {
   const logOut = async (event: any) => {
     event.preventDefault();
 
-    console.log('mySky', mySky)
-
     try {
-      await mySky.logout();
-      setUserID('');
-      setLoggedIn(false);
-      setGlobalLoading(true);
+      setGlobalLoading(true)
+      await logout({ mySky });
+      setGlobalLoading(false);
       NotificationManager.success('You\'ve successfully logged out.', 'Logged Out', 2500);
       history.push('/');
     } catch (error) {

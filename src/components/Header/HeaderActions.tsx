@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import { SkynetContext } from '../../state/SkynetContext';
 import { Link } from 'react-router-dom';
 // @ts-ignore
 import { NotificationManager } from 'react-notifications';
 import { Button } from '../Button';
 import { uploadRegular, plusRegular } from '../../assets/icons';
 import HeaderProfile from './HeaderProfile';
+import { stat } from 'node:fs';
 
 interface Props {
 
@@ -13,29 +15,21 @@ interface Props {
 
 const HeaderActions: React.FC<Props> = () => {
   
-  const mySky = useStoreState((state: any) => state.mySky);
-  const loggedIn = useStoreState((state: any) => state.loggedIn);
-  const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
-  const setUserID = useStoreActions((actions: any) => actions.setUserID);
+  // @ts-ignore
+  const { mySky } = useContext(SkynetContext);
+  const { login } = useStoreActions((state: any) => state.mySky);
+  const { loggedIn } = useStoreState((state: any) => state.mySky);
   const setGlobalLoading = useStoreActions((actions: any) => actions.setGlobalLoading);
 
   const handleLogin = async () => {
     if (!mySky) return;
 
-    try {
-      const status = await mySky.requestLoginAccess();
-      setLoggedIn(status);
-  
-      if (status) {
-        setGlobalLoading(true);
-        setUserID(await mySky.userID());
-        NotificationManager.success('You\'ve successfully logged in', 'Logged In', 2500);
-      }
-    } catch (error) {
-      console.error(error);
-      NotificationManager.error('There\'s been an error logging in. Please try again.', 'Error');
-    }
+    setGlobalLoading(true);
+    await login({ mySky });
+    setGlobalLoading(false);
   }
+
+  console.log({ loggedIn })
 
   return (
     <div className="actions">
@@ -58,7 +52,6 @@ const HeaderActions: React.FC<Props> = () => {
           <object className="fade-up" type="image/svg+xml" data={uploadRegular} width="20" height="18">Upload Icon</object> Upload
         </Button>
       </Link>
-
 
       {loggedIn ?
       <HeaderProfile /> :

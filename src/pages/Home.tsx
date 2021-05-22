@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import { SkynetContext } from '../state/SkynetContext';
 // @ts-ignore
 import { NotificationManager } from 'react-notifications';
 import { getUserEntries } from '../skynet';
@@ -10,6 +11,7 @@ import Gif from '../components/Gif';
 import { Card, CardType } from '../components/Card';
 import { Button } from '../components/Button';
 import { uploadRegular, loader } from '../assets/icons';
+import { resolve } from 'node:url';
 
 interface Props {
 
@@ -22,54 +24,46 @@ const Home: React.FC<Props> = () => {
   const [entries, setEntries] = useState<any>([]);
 
   // Global State
-  const mySky = useStoreState((state: any) => state.mySky);
-  const loggedIn = useStoreState((state: any) => state.loggedIn);
-  const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
-  const setUserID = useStoreActions((actions: any) => actions.setUserID);
+  // @ts-ignore
+  const { mySky } = useContext(SkynetContext);
+  const { userID } = useStoreState((state: any) => state.mySky);
+  const { loggedIn } = useStoreState((state: any) => state.mySky);
+  const { login } = useStoreActions((state: any) => state.mySky);
+  const { fetchGifs } = useStoreActions((state: any) => state.gifs);
   const setGlobalLoading = useStoreActions((actions: any) => actions.setGlobalLoading);
 
   useEffect(() => {
     document.title = 'Home - giphyaf';
     let promiseActive = true; // Needed for cleanup.
     if (!loggedIn) return;
+    setLoading(true);
 
-    getUserEntries().then((data: any) => {
-      if (promiseActive) {
-        if (!data) {
-          console.error('No data to load');
-          setLoading(false);
-          return;
-        };
-        setEntries(data);
-        setLoading(false);
-      }
-
-    });
+    new Promise(async (resolve, reject) => {
+      await fetchGifs({ mySky, userID });
+      setLoading(false);
+      resolve(false);
+    })
 
     return () => {
       promiseActive = false
     }
 
-  }, [loggedIn, mySky])
+  }, [mySky])
 
   const handleLogin = async (event: any) => {
     event?.preventDefault();
     if (!mySky) return;
+    setGlobalLoading(true);
 
     try {
-      const status = await mySky.requestLoginAccess();
-
-      setLoggedIn(status);
-  
-      if (status) {
-        setGlobalLoading(true);
-        setUserID(await mySky.userID());
-        NotificationManager.success('You\'ve successfully logged in', 'Logged In', 2500);
-      }
+      login({ mySky })
+      NotificationManager.success('You\'ve successfully logged in', 'Logged In', 2500);
     } catch (error) {
       console.error(error);
       NotificationManager.error('There\'s been an error logging in. Please try again.', 'Error');
     }
+
+    setGlobalLoading(false);
   }
 
   return (

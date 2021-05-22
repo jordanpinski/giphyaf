@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { initMySky } from './skynet';
+import { SkynetContext } from './state/SkynetContext';
+
+//import { initMySky } from './skynet';
 import {
   BrowserRouter as Router,
   Route,
@@ -19,27 +21,24 @@ import Logo from './components/Logo';
 const App = () => {
 
   // Global state
-  const mySkyInstance = useStoreState((state: any) => state.mySky);
-  const setMySky = useStoreActions((action: any) => action.setMySky);
-  const setLoggedIn = useStoreActions((action: any) => action.setLoggedIn);
-  const setUserID = useStoreActions((action: any) => action.setUserID);
-  const setUserProfile = useStoreActions((action: any) => action.setUserProfile);
+  // @ts-ignore
+  const { mySky } = useContext(SkynetContext);
+  const { setMySky, checkLogin } = useStoreActions((state: any) => state.mySky);
+  // const { login } = useStoreActions((state: any) => state.mySky);
   const globalLoading = useStoreState((state: any) => state.globalLoading);
   const setGlobalLoading = useStoreActions((action: any) => action.setGlobalLoading);
 
   useEffect(() => {
-    initMySky(mySkyInstance).then((data) => {
-      const { mySky, loggedIn, userID, userProfile } = data;
-      setMySky(mySky);
-      setLoggedIn(loggedIn);
-      setUserID(userID);
-      setUserProfile(userProfile);
+    if (!mySky) return;
+    
+    const initMySky = async () => {
+      await setMySky({ mySky });
+      await checkLogin({ mySky });
       setGlobalLoading(false);
+    };
 
-    }).catch((error) => {
-      console.log(error);
-    });
-  });
+    initMySky();
+  }, [mySky]);
 
   return globalLoading ? (
     <div className="loading-overlay">

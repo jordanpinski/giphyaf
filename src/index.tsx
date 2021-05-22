@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { StoreProvider } from 'easy-peasy';
-import store from './store.js';
 import reportWebVitals from './reportWebVitals';
 import App from './app';
 // @ts-ignore
@@ -9,12 +7,18 @@ import { NotificationContainer } from 'react-notifications';
 import './index.css';
 //import 'react-notifications/lib/notifications.css';
 
+import { StoreProvider } from 'easy-peasy';
+import { SkynetProvider } from './state/SkynetContext';
+import { store } from './state/store';
+
 ReactDOM.render(
   <React.StrictMode>
-    <StoreProvider store={store}>
-      <App />
-      <NotificationContainer />
-    </StoreProvider>
+    <SkynetProvider>
+      <StoreProvider store={store}>
+        <App />
+        <NotificationContainer />
+      </StoreProvider>
+    </SkynetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
