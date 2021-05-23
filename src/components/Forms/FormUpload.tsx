@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { SkynetContext } from '../../state/SkynetContext';
+import { useStore, useStoreActions } from 'easy-peasy';
 import { useHistory } from 'react-router-dom';
 import { Button } from '../Button';
 import { useForm } from 'react-hook-form';
@@ -17,6 +19,12 @@ const FormUpload: React.FC<Props> = ({
   setLoading
 }) => {
 
+  // Global State
+  // @ts-ignore
+  const { mySky } = useContext(SkynetContext);
+  const { uploadFile } = useStoreActions((actions: any) => actions.mySky);
+  const { createGif } = useStoreActions((actions: any) => actions.gifs);
+
   // React Hook Form
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -32,7 +40,8 @@ const FormUpload: React.FC<Props> = ({
       tags: tags.split(',').map((tag: string) => tag.trim())
     }
 
-    await createEntry(uploadData);
+    const { skylinkUrl } = await uploadFile({ mySky, file });
+    await createGif({ mySky, skylinkUrl, uploadData: uploadData });
     setLoading(false);
     history.push('/');
   }

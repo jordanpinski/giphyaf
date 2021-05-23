@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import { SkynetContext } from '../state/SkynetContext';
 import GifCreator from '../components/GifCreator';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import HeaderActions from '../components/Header/HeaderActions';
 
 interface Props {
 
@@ -11,9 +13,11 @@ interface Props {
 const Upload: React.FC<Props> = () => {
 
   // Global state
-  const mySky = useStoreState((state: any) => state.mySky);
-  const loggedIn = useStoreState((state: any) => state.loggedIn);
-  const setLoggedIn = useStoreActions((actions: any) => actions.setLoggedIn);
+  // @ts-ignore
+  const { mySky } = useContext(SkynetContext);
+  const { loggedIn } = useStoreState((state: any) => state.mySky);
+  const { login } = useStoreActions((actions: any) => actions.mySky);
+  const setGlobalLoading = useStoreActions((actions: any) => actions.setGlobalLoading);
 
   useEffect(() => {
     document.title = 'Create GIF - giphyaf';
@@ -22,9 +26,9 @@ const Upload: React.FC<Props> = () => {
   const handleLogin = async (event: any) => {
     event.preventDefault();
     if (!mySky) return;
-
-    const status = await mySky.requestLoginAccess();
-    setLoggedIn(status);
+    setGlobalLoading(true);
+    login ({ mySky });
+    setGlobalLoading(false);
   }
 
   return (

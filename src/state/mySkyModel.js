@@ -58,5 +58,21 @@ export const mySkyModel = {
         } catch (error) {
             console.log(error);
         }
+    }),
+    uploadFile: thunk(async (actions, { mySky, file }) => {
+        try {
+            // Upload the image.
+            const { skylink } = await mySky.connector.client.uploadFile(file);
+        
+            // Get the image's URL.
+            const skylinkUrl = await mySky.connector.client.getSkylinkUrl(skylink);
+
+            return {
+                skylinkUrl
+            }
+    
+        } catch (error) {
+            console.log(error);
+        }
     })
 }

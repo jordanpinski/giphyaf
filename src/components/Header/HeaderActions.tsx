@@ -29,8 +29,6 @@ const HeaderActions: React.FC<Props> = () => {
     setGlobalLoading(false);
   }
 
-  console.log({ loggedIn })
-
   return (
     <div className="actions">
       <Link to="/create">

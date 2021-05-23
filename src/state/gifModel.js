@@ -13,10 +13,35 @@ export const gifModel = {
     fetchGifs: thunk(async (actions, { mySky, userID, pageNumber }) => {
         const dacDomain = 'feed-dac.hns';
         const { hostDomain } = mySky;
-        // console.log(`${dacDomain}}/${hostDomain}/posts/page_${pageNumber}.json`);
-        const { data } = await mySky.getJSON(`${dacDomain}}/${hostDomain}/posts/page_${pageNumber}.json`);
+        const { data } = await mySky.getJSON(`${dacDomain}/${hostDomain}/posts/page_${pageNumber}.json`);
         if (!data) return;
 
-        console.log({data});
+        actions.setValidGifs({ gifs: data.items })
     }),
+    createGif: thunk(async (actions, { mySky, skylinkUrl, uploadData }) => {
+        const json = {
+            media: {
+              image: {
+                ext: uploadData.file.type,
+                url: skylinkUrl
+              }
+            },
+            title: uploadData.title,
+            topics: uploadData.tags,
+        }
+        
+        try {
+            console.log({json, mySky});
+
+            for (const dac in mySky.dacs) {
+                console.log({dac})
+                if (mySky.dacs[dac].dacDomain === 'feed-dac.hns') {
+                    await mySky.dacs[dac].createPost(json);
+                }
+            }
+
+        } catch (error) {
+            console.error('Error uploading JSON', error);
+        }
+    })
 }

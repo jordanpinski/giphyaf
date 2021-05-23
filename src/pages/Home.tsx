@@ -4,14 +4,12 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { SkynetContext } from '../state/SkynetContext';
 // @ts-ignore
 import { NotificationManager } from 'react-notifications';
-import { getUserEntries } from '../skynet';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Gif from '../components/Gif';
 import { Card, CardType } from '../components/Card';
 import { Button } from '../components/Button';
 import { uploadRegular, loader } from '../assets/icons';
-import { resolve } from 'node:url';
 
 interface Props {
 
@@ -21,13 +19,12 @@ const Home: React.FC<Props> = () => {
 
   // Local state
   const [loading, setLoading] = useState<boolean>(true);
-  const [entries, setEntries] = useState<any>([]);
 
   // Global State
   // @ts-ignore
   const { mySky } = useContext(SkynetContext);
-  const { userID } = useStoreState((state: any) => state.mySky);
-  const { loggedIn } = useStoreState((state: any) => state.mySky);
+  const { userID, loggedIn } = useStoreState((state: any) => state.mySky);
+  const { gifs } = useStoreState((state: any) => state.gifs);
   const { login } = useStoreActions((state: any) => state.mySky);
   const { fetchGifs } = useStoreActions((state: any) => state.gifs);
   const setGlobalLoading = useStoreActions((actions: any) => actions.setGlobalLoading);
@@ -39,9 +36,9 @@ const Home: React.FC<Props> = () => {
     setLoading(true);
 
     new Promise(async (resolve, reject) => {
-      await fetchGifs({ mySky, userID });
+      await fetchGifs({ mySky, userID, pageNumber: 0 });
       setLoading(false);
-      resolve(false);
+      resolve(true);
     })
 
     return () => {
@@ -87,17 +84,17 @@ const Home: React.FC<Props> = () => {
                         <object className="fade-up" type="image/svg+xml" data={loader} width="80px">Loading</object>
                       </div>
                     ) : (
-                      entries.length > 0 ? entries.map((entry: any, index: number) => {
+                      gifs.length > 0 ? gifs.map((gif: any, index: number) => {
                         return (
                           <>
                             <div className="column column-6 column-lg-3 column-md-4" key={index}>
                               <Gif
-                                skylinkUrl={entry.content.media.image.url}
-                                title={entry.content.title}
-                                tags={entry.content.topics}
+                                skylinkUrl={gif.content.media.image.url}
+                                title={gif.content.title}
+                                tags={gif.content.topics}
                               />
                             </div>
-                            {index === entries.length - 1 ? (
+                            {index === gifs.length - 1 ? (
                               <div className="column column-12 column-lg-3 column-md-4 fade-up" key={index + 1}>
                                 <Card type={CardType.actionCTA}>
                                   <Link to="/upload" title="Upload GIF"><Button type="secondary" htmlType="button"> <object className="fade-up" type="image/svg+xml" data={uploadRegular} width="20" height="18">Upload Icon</object>Upload GIF</Button></Link>
