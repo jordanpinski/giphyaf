@@ -16,6 +16,10 @@ You can view the demo at: https://giphyaf.hns.siasky.net/
 
 ## Changelog
 
+### v1.0.6
+- Refactored state management
+- Speed improvements
+
 ### v1.0.5
 - Fixed bug where DACs were being loaded multiple times.
 
