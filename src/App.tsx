@@ -24,7 +24,6 @@ const App = () => {
   // @ts-ignore
   const { mySky } = useContext(SkynetContext);
   const { setMySky, checkLogin } = useStoreActions((state: any) => state.mySky);
-  // const { login } = useStoreActions((state: any) => state.mySky);
   const globalLoading = useStoreState((state: any) => state.globalLoading);
   const setGlobalLoading = useStoreActions((action: any) => action.setGlobalLoading);
 

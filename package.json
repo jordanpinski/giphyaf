@@ -1,6 +1,6 @@
 {
   "name": "giphyaf",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "private": true,
   "main": "dist/index",
   "homepage": ".",
@@ -30,7 +30,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-tabs": "^3.2.2",
-    "skynet-js": "4.0.6-beta",
+    "skynet-js": "4.0.8-beta",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },

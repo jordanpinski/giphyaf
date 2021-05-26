@@ -15,7 +15,6 @@ export const gifModel = {
         const { hostDomain } = mySky;
         const { data } = await mySky.getJSON(`${dacDomain}/${hostDomain}/posts/page_${pageNumber}.json`);
         if (!data) return;
-
         actions.setValidGifs({ gifs: data.items })
     }),
     createGif: thunk(async (actions, { mySky, skylinkUrl, uploadData }) => {
@@ -31,10 +30,8 @@ export const gifModel = {
         }
         
         try {
-            console.log({json, mySky});
 
             for (const dac in mySky.dacs) {
-                console.log({dac})
                 if (mySky.dacs[dac].dacDomain === 'feed-dac.hns') {
                     await mySky.dacs[dac].createPost(json);
                 }

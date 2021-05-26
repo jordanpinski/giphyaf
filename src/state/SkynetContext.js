@@ -3,35 +3,30 @@ import { SkynetClient } from 'skynet-js';
 
 // To import DAC, uncomment here, and 2 spots below.
 // import { ContentRecordDAC } from '@skynetlabs/content-record-library';
-// import { UserProfileDAC } from '@skynethub/userprofile-library';
+import { UserProfileDAC } from '@skynethub/userprofile-library';
 import { FeedDAC } from 'feed-dac-library';
 
 const SkynetContext = createContext(undefined);
 
 // We'll define a portal to allow for developing on localhost.
 // When hosted on a skynet portal, SkynetClient doesn't need any arguments.
-const portal =
-  window.location.hostname === 'localhost' ? 'https://siasky.net' : undefined;
+const PORTAL = window.location.hostname === 'localhost' ? 'https://siasky.net' : undefined;
+const DATA_DOMAIN = window.location.hostname === 'localhost' ? 'localhost' : 'giphyaf.hns';
 
 // Initiate the SkynetClient
-const client = new SkynetClient(portal);
+const client = new SkynetClient(PORTAL);
 
-// For now, we won't use any DACs -- uncomment to create
-// const contentRecord = new ContentRecordDAC();
-const contentRecord = null;
-// const userProfile = new UserProfileDAC();
+// Instantiate DACs
+const userProfileDAC = new UserProfileDAC();
 const feedDAC = new FeedDAC();
-
-const dataDomain =
-  window.location.hostname === 'localhost' ? 'localhost' : 'appName.hns';
 
 const SkynetProvider = ({ children }) => {
   const [skynetState, setSkynetState] = useState({
     client,
     mySky: null,
-    contentRecord,
+    userProfileDAC,
     feedDAC,
-    dataDomain,
+    dataDomain: DATA_DOMAIN,
   });
 
   useEffect(() => {
@@ -40,18 +35,17 @@ const SkynetProvider = ({ children }) => {
       try {
         // load invisible iframe and define app's data domain
         // needed for permissions write
-        const mySky = await client.loadMySky(dataDomain, {
+        const mySky = await client.loadMySky(DATA_DOMAIN, {
           debug: true,
-          dev: true,
+          dev: false,
         });
 
         // load necessary DACs and permissions
-        // Uncomment line below to load DACs
-        // await mySky.loadDacs(contentRecord);
-        await mySky.loadDacs(feedDAC);
-
+        await mySky.loadDacs(feedDAC, userProfileDAC);
+        
         // replace mySky in state object
         setSkynetState({ ...skynetState, mySky });
+
       } catch (e) {
         console.error(e);
       }

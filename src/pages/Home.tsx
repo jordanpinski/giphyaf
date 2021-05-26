@@ -31,7 +31,6 @@ const Home: React.FC<Props> = () => {
 
   useEffect(() => {
     document.title = 'Home - giphyaf';
-    let promiseActive = true; // Needed for cleanup.
     if (!loggedIn) return;
     setLoading(true);
 
@@ -41,10 +40,6 @@ const Home: React.FC<Props> = () => {
       resolve(true);
     })
 
-    return () => {
-      promiseActive = false
-    }
-
   }, [mySky])
 
   const handleLogin = async (event: any) => {
@@ -53,7 +48,7 @@ const Home: React.FC<Props> = () => {
     setGlobalLoading(true);
 
     try {
-      login({ mySky })
+      await login({ mySky })
       NotificationManager.success('You\'ve successfully logged in', 'Logged In', 2500);
     } catch (error) {
       console.error(error);
@@ -86,8 +81,8 @@ const Home: React.FC<Props> = () => {
                     ) : (
                       gifs.length > 0 ? gifs.map((gif: any, index: number) => {
                         return (
-                          <>
-                            <div className="column column-6 column-lg-3 column-md-4" key={index}>
+                          <React.Fragment key={index}>
+                            <div className="column column-6 column-lg-3 column-md-4">
                               <Gif
                                 skylinkUrl={gif.content.media.image.url}
                                 title={gif.content.title}
@@ -95,13 +90,13 @@ const Home: React.FC<Props> = () => {
                               />
                             </div>
                             {index === gifs.length - 1 ? (
-                              <div className="column column-12 column-lg-3 column-md-4 fade-up" key={index + 1}>
+                              <div className="column column-12 column-lg-3 column-md-4 fade-up">
                                 <Card type={CardType.actionCTA}>
                                   <Link to="/upload" title="Upload GIF"><Button type="secondary" htmlType="button"> <object className="fade-up" type="image/svg+xml" data={uploadRegular} width="20" height="18">Upload Icon</object>Upload GIF</Button></Link>
                                 </Card>
                               </div>
-                            ) : null}
-                          </>
+                            ) : null }
+                          </React.Fragment>
                       )}) : (
                         <>
                           <div className="column column-12">

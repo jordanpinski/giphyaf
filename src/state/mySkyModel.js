@@ -1,8 +1,8 @@
 import { action, thunk, computed } from 'easy-peasy';
-import HeaderActions from '../components/Header/HeaderActions';
 
 export const mySkyModel = {
     // MySky State
+    userProfile: null,
     userID: null,
     mySky: null,
     loggedIn: computed((state) => !!state.userID),
@@ -11,6 +11,21 @@ export const mySkyModel = {
     setMySky: action((state, { mySky }) => {
         state.mySky = mySky
     }),
+
+    setValidUserProfile: action((state, { userProfile }) => {
+        state.userProfile = userProfile;
+    }),
+    setInvalidUserProfile: action((state) => {
+        state.userProfile = null;
+    }),
+    setUserProfile: thunk((actions, { userProfile }) => {
+        if (userProfile) {
+            actions.setValidUserProfile({ userProfile });
+        } else {
+            actions.setInvalidUserProfile({ userProfile });
+        }
+    }),
+    
     setValidUserID: action((state, { userID }) => {
         state.userID = userID;
     }),
@@ -37,7 +52,11 @@ export const mySkyModel = {
             const status = await mySky.requestLoginAccess();
 
             if (status) {
-                actions.setUserID({ userID: await mySky.userID() });
+                const userID = await mySky.userID();
+                //const userProfile = await mySky.dacs[1].getProfile(userID);
+                const userProfile = await mySky.connector.client.file.getJSON(userID, 'profile-dac.hns/profileIndex.json');
+                actions.setUserID({ userID });
+                actions.setUserProfile({ userProfile: userProfile.data.profile });
             }
         } catch (error) {
             console.log(error);
@@ -51,7 +70,10 @@ export const mySkyModel = {
             const userID = await mySky.userID();
 
             if (userID) {
+                //const userProfile = await mySky.dacs[1].getProfile(userID);
+                const userProfile = await mySky.connector.client.file.getJSON(userID, 'profile-dac.hns/profileIndex.json');
                 actions.setUserID({ userID });
+                actions.setUserProfile({ userProfile: userProfile.data.profile });
                 return;
             }
             actions.setUserID({ userID: null });

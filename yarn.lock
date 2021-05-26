@@ -2436,6 +2436,11 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base32-decode@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/base32-decode/-/base32-decode-1.0.0.tgz#2a821d6a664890c872f20aa9aca95a4b4b80e2a7"
+  integrity sha512-KNWUX/R7wKenwE/G/qFMzGScOgVntOmbE27vvc6GrniDGYb6a5+qWcuoXl8WIOQL7q0TpK7nZDm1Y04Yi3Yn5g==
+
 base32-encode@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/base32-encode/-/base32-encode-1.2.0.tgz#e150573a5e431af0a998e32bdfde7045725ca453"
@@ -8855,11 +8860,13 @@ sjcl@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/sjcl/-/sjcl-1.0.8.tgz#f2ec8d7dc1f0f21b069b8914a41a8f236b0e252a"
 
-skynet-js@4.0.6-beta, skynet-js@^4.0.6-beta:
-  version "4.0.6-beta"
-  resolved "https://registry.yarnpkg.com/skynet-js/-/skynet-js-4.0.6-beta.tgz#45532a45d989a587f216516e6618cfb6194f4dca"
+skynet-js@4.0.8-beta:
+  version "4.0.8-beta"
+  resolved "https://registry.yarnpkg.com/skynet-js/-/skynet-js-4.0.8-beta.tgz#a1d3384a120c2dc09f719671a2639db86b1ce07b"
+  integrity sha512-TgIN6xA6Fdj7+dhayKhA4oSsPsD3pFlDll7YDpG8uXsaRkeZRFvB4R+KmiKUUGkZ1wId0qL+Xp/lk362TiUP1Q==
   dependencies:
     axios "^0.21.0"
+    base32-decode "^1.0.0"
     base32-encode "^1.1.1"
     base64-js "^1.3.1"
     blakejs "^1.1.0"
@@ -8910,6 +8917,25 @@ skynet-js@^4.0.3-beta:
     randombytes "^2.1.0"
     sjcl "^1.0.8"
     skynet-mysky-utils "^0.2.0"
+    tweetnacl "^1.0.3"
+    url-join "^4.0.1"
+    url-parse "1.4.7"
+
+skynet-js@^4.0.6-beta:
+  version "4.0.6-beta"
+  resolved "https://registry.yarnpkg.com/skynet-js/-/skynet-js-4.0.6-beta.tgz#45532a45d989a587f216516e6618cfb6194f4dca"
+  dependencies:
+    axios "^0.21.0"
+    base32-encode "^1.1.1"
+    base64-js "^1.3.1"
+    blakejs "^1.1.0"
+    buffer "^6.0.1"
+    mime "^2.5.2"
+    path-browserify "^1.0.1"
+    post-me "^0.4.5"
+    randombytes "^2.1.0"
+    sjcl "^1.0.8"
+    skynet-mysky-utils "^0.2.2"
     tweetnacl "^1.0.3"
     url-join "^4.0.1"
     url-parse "1.4.7"

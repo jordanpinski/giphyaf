@@ -27,7 +27,7 @@ const Upload: React.FC<Props> = () => {
     event.preventDefault();
     if (!mySky) return;
     setGlobalLoading(true);
-    login ({ mySky });
+    await login ({ mySky });
     setGlobalLoading(false);
   }
 

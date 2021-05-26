@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useStoreActions } from 'easy-peasy';
+import React, { useEffect, useState, useContext } from 'react';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import { SkynetContext } from '../../state/SkynetContext';
 import Avatar from '../Avatar';
 import { LazyImage } from "react-lazy-images";
 import { copySolid, loader } from '../../assets/icons';
@@ -20,15 +21,26 @@ const Gif: React.FC<Props> = ({
   
   // Local state
   const [copied, setCopied] = useState<boolean>(false);
+  const [avatarUrl, setAvatarUrl] = useState<string>('');
 
   // Global state
+  // @ts-ignore
+  const { mySky } = useContext(SkynetContext);
   const setSelectedGIF = useStoreActions((action: any) => action.setSelectedGIF);
+  const { userProfile } = useStoreState((state: any) => state.mySky);
 
   useEffect(() => {
     setTimeout(() => { 
       setCopied(false);
     }, 1000);
   }, [copied])
+
+  useEffect(() => {
+    if (!userProfile.avatar[0].url) return;
+    const avatarSkyLinkUrl = mySky.connector.client.getSkylinkUrl(userProfile.avatar[0].url).then((result: any) => {
+      setAvatarUrl(result);
+    });
+  }, [userProfile]);
 
   const handleOnClick = () => {
     setSelectedGIF({
@@ -66,7 +78,13 @@ const Gif: React.FC<Props> = ({
         </div>
       </a>
       <div className="meta">
-        <Avatar text="User" width={34} height={34} />
+        <Avatar
+          text={userProfile ? userProfile.username : null}
+          width={34}
+          height={34}
+          src={avatarUrl}
+          type={avatarUrl !== '' ? 'string' : 'object'}
+        />
         <div className="right">
           <div>
             <p className="title">{title ? title : 'Title Here'}</p>

@@ -31,7 +31,9 @@ const GifMakerEditor: React.FC<Props> = ({ file, filePreview, handleCancel }) =>
   const handleNext = () => {
     const canvas = canvasContainerRef.current.querySelector('canvas');
     canvas.toBlob((blob: any) => {
-      setBlobGif(new File([blob], 'image/gif'));
+      setBlobGif(new File([blob], 'giphyaf.gif', {
+        type: 'image/gif'
+      }));
       setGif(canvas)
     }, 'image/gif', 1);
   }

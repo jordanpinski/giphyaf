@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { SkynetContext } from '../../state/SkynetContext';
-import { useStore, useStoreActions } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 import { useHistory } from 'react-router-dom';
 import { Button } from '../Button';
 import { useForm } from 'react-hook-form';
-import { createEntry, UploadType } from '../../skynet';
 import './Form.css';
 
 interface Props {
@@ -34,7 +33,7 @@ const FormUpload: React.FC<Props> = ({
   const onSubmit = async (data: any) => {
     setLoading(true);
     const { title, tags } = data;
-    const uploadData: UploadType = {
+    const uploadData = {
       file,
       title,
       tags: tags.split(',').map((tag: string) => tag.trim())

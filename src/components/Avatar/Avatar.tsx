@@ -12,7 +12,7 @@ interface Props {
   height: number
   text: string
   src?: string
-  type?: AvatarType
+  type?: string
 }
 
 const Avatar: React.FC<Props> = ({
@@ -20,24 +20,24 @@ const Avatar: React.FC<Props> = ({
   height,
   text,
   src = userRegular,
-  type = AvatarType.object
+  type = 'object'
 }) => {
 
-  let temp;
+  let temp = null;
 
   switch (type) {
-    case AvatarType.object:
+    case 'object':
       temp = (
         <div className="avatar" style={{
           width: width,
           height: height
         }}>
-          <object className="fade-up" type="image/svg+xml" data={src}>{text}</object>
+          <object className="fade-up" type="image/svg+xml" data={src ? src : userRegular}>{text}</object>
         </div>
       )
       break;
 
-    case AvatarType.img:
+    case 'string':
       temp = (
         <div className="avatar" style={{
           width: width,
