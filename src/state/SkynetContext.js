@@ -37,7 +37,7 @@ const SkynetProvider = ({ children }) => {
         // needed for permissions write
         const mySky = await client.loadMySky(DATA_DOMAIN, {
           debug: false,
-          dev: false,
+          dev: true,
         });
 
         // load necessary DACs and permissions

@@ -16,6 +16,9 @@ You can view the demo at: https://giphyaf.hns.siasky.net/
 
 ## Changelog
 
+### v1.0.8
+- Fixed avatar bug.
+
 ### v1.0.7
 - Added profile avatar.
 - Added profile link to user menu.

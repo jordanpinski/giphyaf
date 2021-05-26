@@ -36,10 +36,16 @@ const Gif: React.FC<Props> = ({
   }, [copied])
 
   useEffect(() => {
+    if (!userProfile) return;
     if (!userProfile.avatar[0].url) return;
-    const avatarSkyLinkUrl = mySky.connector.client.getSkylinkUrl(userProfile.avatar[0].url).then((result: any) => {
-      setAvatarUrl(result);
-    });
+    
+    try {
+      mySky.connector.client.getSkylinkUrl(userProfile.avatar[0].url).then((result: any) => {
+        setAvatarUrl(result);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }, [userProfile]);
 
   const handleOnClick = () => {

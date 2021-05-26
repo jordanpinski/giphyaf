@@ -29,10 +29,17 @@ const HeaderProfile: React.FC<Props> = () => {
   const history = useHistory();
 
   useEffect(() => {
+    if (!userProfile) return;
     if (!userProfile.avatar[0].url) return;
-    mySky.connector.client.getSkylinkUrl(userProfile.avatar[0].url).then((result: any) => {
-      setAvatarUrl(result);
-    });
+    
+    try {
+      mySky.connector.client.getSkylinkUrl(userProfile.avatar[0].url).then((result: any) => {
+        setAvatarUrl(result);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
   }, [mySky, userProfile]);
 
   const onClick = (event: any) => {
