@@ -37,7 +37,7 @@ const App = () => {
     };
 
     initMySky();
-  }, [mySky]);
+  }, [mySky, checkLogin, setGlobalLoading, setMySky]);
 
   return globalLoading ? (
     <div className="loading-overlay">

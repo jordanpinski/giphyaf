@@ -29,10 +29,6 @@ const GifUploader: React.FC<Props> = () => {
       return;
     }
 
-    //file.name = 'giphyaf.gif';
-
-    console.log(file);
-
     setFile(file);
 
   }

@@ -30,10 +30,10 @@ const HeaderProfile: React.FC<Props> = () => {
 
   useEffect(() => {
     if (!userProfile.avatar[0].url) return;
-    const avatarSkyLinkUrl = mySky.connector.client.getSkylinkUrl(userProfile.avatar[0].url).then((result: any) => {
+    mySky.connector.client.getSkylinkUrl(userProfile.avatar[0].url).then((result: any) => {
       setAvatarUrl(result);
     });
-  }, [userProfile]);
+  }, [mySky, userProfile]);
 
   const onClick = (event: any) => {
     setMenuVisible(!menuVisible);
@@ -65,7 +65,7 @@ const HeaderProfile: React.FC<Props> = () => {
       <Menu visible={menuVisible}>
         <ul>
           {userProfile ? (<li className="username">Welcome {userProfile.username}!</li>) : null}
-          <li><a href="https://skyprofile.hns.siasky.net/" target="_blank" title="Profile">Profile</a></li>
+          <li><a href="https://skyprofile.hns.siasky.net/" target="_blank" rel="noreferrer" title="Profile">Profile</a></li>
           <li><Link to="/" title="My Uploads">My Uploads</Link></li>
           <li><a href="/" title="Log Out" onClick={logOut}>Log Out</a></li>
         </ul>
