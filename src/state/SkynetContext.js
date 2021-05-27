@@ -2,8 +2,6 @@ import { createContext, useState, useEffect } from 'react';
 import { SkynetClient } from 'skynet-js';
 
 // To import DAC, uncomment here, and 2 spots below.
-// import { ContentRecordDAC } from '@skynetlabs/content-record-library';
-import { UserProfileDAC } from '@skynethub/userprofile-library';
 import { FeedDAC } from 'feed-dac-library';
 
 const SkynetContext = createContext(undefined);
@@ -17,14 +15,12 @@ const DATA_DOMAIN = window.location.hostname === 'localhost' ? 'localhost' : 'gi
 const client = new SkynetClient(PORTAL);
 
 // Instantiate DACs
-const userProfileDAC = new UserProfileDAC();
 const feedDAC = new FeedDAC();
 
 const SkynetProvider = ({ children }) => {
   const [skynetState, setSkynetState] = useState({
     client,
     mySky: null,
-    userProfileDAC,
     feedDAC,
     dataDomain: DATA_DOMAIN,
   });
@@ -36,12 +32,12 @@ const SkynetProvider = ({ children }) => {
         // load invisible iframe and define app's data domain
         // needed for permissions write
         const mySky = await client.loadMySky(DATA_DOMAIN, {
-          debug: false,
+          debug: true,
           dev: true,
         });
 
         // load necessary DACs and permissions
-        await mySky.loadDacs(feedDAC, userProfileDAC);
+        await mySky.loadDacs(feedDAC);
         
         // replace mySky in state object
         setSkynetState({ ...skynetState, mySky });

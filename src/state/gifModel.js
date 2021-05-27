@@ -8,12 +8,14 @@ export const gifModel = {
     setValidGifs: action((state, { gifs }) => {
         state.gifs = gifs;
     }),
+    setInvalidGifs: action((state) => {
+        state.gifs = [];
+    }),
 
     // GIF Thunks
-    fetchGifs: thunk(async (actions, { mySky, userID, pageNumber }) => {
-        const dacDomain = 'feed-dac.hns';
+    fetchGifs: thunk(async (actions, { mySky, pageNumber }) => {
         const { hostDomain } = mySky;
-        const { data } = await mySky.getJSON(`${dacDomain}/${hostDomain}/posts/page_${pageNumber}.json`);
+        const { data } = await mySky.getJSON(`feed-dac.hns/${hostDomain}/posts/page_${pageNumber}.json`);
         if (!data) return;
         actions.setValidGifs({ gifs: data.items })
     }),

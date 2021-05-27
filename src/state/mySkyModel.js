@@ -44,6 +44,7 @@ export const mySkyModel = {
     logout: thunk(async (actions, { mySky }) => {
         await mySky.logout();
         actions.setUserID({ userID: null });
+        actions.setUserProfile({ userProfile: null })
     }),
     login: thunk(async (actions, { mySky }) => {
         if (!mySky) return;
@@ -53,14 +54,20 @@ export const mySkyModel = {
 
             if (status) {
                 const userID = await mySky.userID();
-                //const userProfile = await mySky.dacs[1].getProfile(userID);
                 const userProfile = await mySky.connector.client.file.getJSON(userID, 'profile-dac.hns/profileIndex.json');
                 actions.setUserID({ userID });
-                actions.setUserProfile({ userProfile: userProfile.data.profile });
+
+                if (userProfile.data) {
+                    actions.setUserProfile({ userProfile: userProfile.data.profile });
+                }
+                return;
             }
         } catch (error) {
             console.log(error);
+            throw new Error(error.message);
         }
+
+        throw new Error('Login failed. The dialog box was closed before successfully signing in.');
     }),
     checkLogin: thunk(async (actions, { mySky }) => {
         if (!mySky) return;
@@ -73,10 +80,13 @@ export const mySkyModel = {
                 //const userProfile = await mySky.dacs[1].getProfile(userID);
                 const userProfile = await mySky.connector.client.file.getJSON(userID, 'profile-dac.hns/profileIndex.json');
                 actions.setUserID({ userID });
-                actions.setUserProfile({ userProfile: userProfile.data.profile });
+
+                if (userProfile.data) {
+                    actions.setUserProfile({ userProfile: userProfile.data.profile });
+                }
                 return;
             }
-            actions.setUserID({ userID: null });
+
         } catch (error) {
             console.log(error);
         }

@@ -1,6 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { SkynetContext } from '../state/SkynetContext';
+// @ts-ignore
+import { NotificationManager } from 'react-notifications';
 import GifCreator from '../components/GifCreator';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -27,8 +29,16 @@ const Upload: React.FC<Props> = () => {
     event.preventDefault();
     if (!mySky) return;
     setGlobalLoading(true);
-    await login ({ mySky });
-    setGlobalLoading(false);
+
+    try {
+      await login({ mySky })
+      NotificationManager.success('You\'ve successfully logged in', 'Logged In', 2500);
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error(error.message, 'Error');
+    }
+
+    setGlobalLoading(false)
   }
 
   return (

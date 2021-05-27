@@ -25,7 +25,13 @@ const HeaderActions: React.FC<Props> = () => {
     if (!mySky) return;
 
     setGlobalLoading(true);
-    await login({ mySky });
+    try {
+      await login({ mySky })
+      NotificationManager.success('You\'ve successfully logged in', 'Logged In', 2500);
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error(error.message, 'Error');
+    }
     setGlobalLoading(false);
   }
 

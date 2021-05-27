@@ -35,7 +35,7 @@ const Home: React.FC<Props> = () => {
     setLoading(true);
 
     new Promise(async (resolve, reject) => {
-      await fetchGifs({ mySky, userID, pageNumber: 0 });
+      await fetchGifs({ mySky, pageNumber: 0 });
       setLoading(false);
       resolve(true);
     })
@@ -51,8 +51,7 @@ const Home: React.FC<Props> = () => {
       await login({ mySky })
       NotificationManager.success('You\'ve successfully logged in', 'Logged In', 2500);
     } catch (error) {
-      console.error(error);
-      NotificationManager.error('There\'s been an error logging in. Please try again.', 'Error');
+      NotificationManager.error(error.message, 'Error');
     }
 
     setGlobalLoading(false);

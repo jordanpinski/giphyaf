@@ -21,6 +21,7 @@ const HeaderProfile: React.FC<Props> = () => {
   // @ts-ignore
   const { mySky } = useContext(SkynetContext);
   const { logout } = useStoreActions((actions: any) => actions.mySky);
+  const { setInvalidGifs } = useStoreActions((actions: any) => actions.gifs);
   const { userProfile } = useStoreState((state: any) => state.mySky);
 
   const setGlobalLoading = useStoreActions((actions: any) => actions.setGlobalLoading);
@@ -52,11 +53,13 @@ const HeaderProfile: React.FC<Props> = () => {
     try {
       setGlobalLoading(true)
       await logout({ mySky });
+      await setInvalidGifs();
       setGlobalLoading(false);
       NotificationManager.success('You\'ve successfully logged out.', 'Logged Out', 2500);
       history.push('/');
     } catch (error) {
       console.error(error);
+      NotificationManager.error(error.message, 'Error');
     }
   }
 
